@@ -1,0 +1,17 @@
+/* #responsive-image 
+{  
+  width: 1499 !important;  
+  height: 299 !important;
+}  */
+video {
+  object-fit: cover;
+}
+.background-height{
+  height: 670 !important;
+}
+.w-background-video-height {
+  position: relative;
+  overflow: hidden;
+  height: 670px;
+  color: white;
+}
