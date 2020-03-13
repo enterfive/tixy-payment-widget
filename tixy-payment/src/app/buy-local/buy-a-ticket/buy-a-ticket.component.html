@@ -62,53 +62,88 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
         <div class="embed-card-carousel">
           <div data-duration-in="300" data-duration-out="100" class="tabs w-tabs">
 
-            <!-- Tab Component Start Starts -->
-            <div class="embed-tab-menu w-tab-menu">
-              <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link w--current">
-                <div>Tickets</div>
-              </a>
-                <a data-w-tab="Tab 4" class="embed-tab w-inline-block w-tab-link">
-                  <div>Information</div>
-                </a>
-                  <a data-w-tab="Tab 5" class="embed-tab w-inline-block w-tab-link">
-                    <div>Payment</div>
-                  </a>
-                </div>       
-            <!-- Tab Component Start Ends -->
-
-
             <!-- Entire Ticket Section Starts -->
             <ng-container *ngIf="ticket" >
+  <!-- Tab Component Start Starts -->
+  <div class="embed-tab-menu w-tab-menu">
+    <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link w--current">
+      <div>Tickets</div>
+    </a>
+      <a data-w-tab="Tab 4" class="embed-tab w-inline-block w-tab-link">
+        <div>Information</div>
+      </a>
+        <a data-w-tab="Tab 5" class="embed-tab w-inline-block w-tab-link">
+          <div>Payment</div>
+        </a>
+      </div>       
+  <!-- Tab Component Start Ends -->
+
                 <div class="embed-tab-content w-tab-content">
                   <div data-w-tab="Tab 1" class="embed-tab-pane w-tab-pane w--tab-active">
                     <h3 class="heading-6">Pick your tickets</h3>
                     <p class="embed-paragraph push-up">Select one or more tickets to continue</p>
                     <div data-duration-in="300" data-duration-out="100" class="embed-nested-tabs w-tabs">
                       <div class="embed-tab-menu-switch w-tab-menu">
-                        <a routerLink="/buy-a-local-ticket" data-w-tab="Tab 1" class="embed-tab-switch w-inline-block w-tab-link w--current">
-                          <div>Naira prices</div></a>
-                          <a routerLink="/buy-international-ticket" data-w-tab="Tab 3" class="embed-tab-switch w-inline-block w-tab-link">
-                            <div>International prices</div></a>
+                        <a 
+                        [routerLink]="['/buy-a-local-ticket', eventId]"
+                        data-w-tab="Tab 1" 
+                        class="embed-tab-switch w-inline-block w-tab-link w--current"
+                        >
+                          <div>Naira prices</div>
+                        </a>
+                          <a 
+                          [routerLink]="['/buy-international-ticket', eventId]"
+                          data-w-tab="Tab 3" 
+                          class="embed-tab-switch w-inline-block w-tab-link">
+                            <div>International prices</div>
+                          </a>
                           </div>
                           <div class="embed-nested-tab-content padded w-tab-content">
                             <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
 
                              <!-- Pick Your Ticket Card Starts -->
-                              <div class="embed-ticket active" *ngFor="let ticketDetail of ticketDetails" >
-                                <div >
+                              <div 
+                              class="embed-ticket" 
+                              *ngFor="let ticketDetail of ticketDetails" 
+                              (click)="activateClass(ticketDetail)"                            
+                              [ngClass]="{'active': ticketDetail.active}"
+                              >
+                                <div>
                                 <div class="row center v-mobile left-mobile">
                                   <div><h4 class="plan-title">{{ticketDetail.category_name}}</h4>
                                     <p class="embed-paragraph small">{{ticketDetail.description}}.</p></div>
                                     <div class="embed-pricing">
-                                      <div class="embed-ticket-price active">₦ {{ticketDetail.price}}</div>
+                                      <div class="embed-ticket-price active">₦ {{ticketDetail.price}} </div>
                                       <div class="embed-ticket-quantity">
-                                        <div class="embed-icon-wrap">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus embed-icon small" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt=""><line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <div 
+                                        class="embed-icon-wrap"
+                                        (click)="activateClassMinus(ticketDetail)"
+                                        >
+                                          <svg 
+                                          xmlns="http://www.w3.org/2000/svg" 
+                                          width="24" 
+                                          height="24" 
+                                          viewBox="0 0 24 24" 
+                                          fill="none" 
+                                          stroke="currentColor" 
+                                          stroke-width="2" 
+                                          stroke-linecap="round" 
+                                          stroke-linejoin="round" 
+                                          class="feather feather-minus embed-icon small" 
+                                          src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" 
+                                          alt="">
+                                          <line
+                                           x1="5" 
+                                           y1="12" 
+                                           x2="19" 
+                                           y2="12"
+                                           >
+                                          </line>
                                           </svg>
                                         </div>
                                         <div class="embed-form-block w-form">
                                           <form id="email-form" name="email-form" data-name="Email Form">
-                                            <input type="text" class="text-field w-input" maxlength="256" name="name-7" data-name="Name 7" placeholder="1" id="name-7">
+                                            <input type="text" class="text-field w-input" maxlength="256" name="name-7" data-name="Name 7" placeholder="{{ticketNumber}}" id="name-7">
                                           </form>
                                           <div class="w-form-done">
                                             <div>Thank you! Your submission has been received!</div>
@@ -118,8 +153,23 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                                             </div>
                                           </div>
                                         </div>
-                                        <div class="embed-icon-wrap">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus embed-icon small" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt="">
+                                        <div 
+                                        class="embed-icon-wrap"
+                                        (click)="activateClassMinus(ticketDetail)"
+                                        >
+                                          <svg 
+                                          xmlns="http://www.w3.org/2000/svg" 
+                                          width="24" 
+                                          height="24" 
+                                          viewBox="0 0 24 24" 
+                                          fill="none" 
+                                          stroke="currentColor" 
+                                          stroke-width="2" 
+                                          stroke-linecap="round" 
+                                          stroke-linejoin="round" 
+                                          class="feather feather-plus embed-icon small" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" 
+                                          alt=""
+                                          >
                                             <line x1="12" y1="5" x2="12" y2="19"></line>
                                             <line x1="5" y1="12" x2="19" y2="12"></line>
                                           </svg>
@@ -129,20 +179,18 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                                   </div>
                                 </div>
                               </div>
-
-
-                              
                              <!-- Pick Your Ticket Card Ends -->
-            </div>
+        </div>
   </div>
 </div>
 </div>
 </div>
 <div class="embed-action-bar _1">
-  <a class="embed-button subtle w-button">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left icon">
+  <a >
+    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left icon">
       <polyline points="15 18 9 12 15 6"></polyline>
-    </svg> Back</a>
+    </svg>  -->
+  </a> 
     <a (click)="toggleInformation()" class="embed-button w-button">Continue 
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right icon">
         <polyline points="9 18 15 12 9 6"></polyline>
@@ -159,6 +207,19 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 
 
 <ng-container *ngIf="information">
+   <!-- Tab Component Start Starts -->
+   <div class="embed-tab-menu w-tab-menu">
+    <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link">
+      <div>Tickets</div>
+    </a>
+      <a data-w-tab="Tab 4" class="embed-tab w-inline-block w-tab-link w--current">
+        <div>Information</div>
+      </a>
+        <a data-w-tab="Tab 5" class="embed-tab w-inline-block w-tab-link">
+          <div>Payment</div>
+        </a>
+      </div>       
+  <!-- Tab Component Start Ends -->
 <div  data-w-tab="Tab 4" class="embed-tab-pane w-tab-pane w--tab-active" style="opacity: 1; transition: opacity 300ms ease 0s;">
   <h3 class="heading-6">Fill out buyer and ticket information</h3>
   <div class="w-form">
@@ -295,7 +356,19 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
  <!-- Entire Payment Section Starts -->
 
 <ng-container  *ngIf="payment">
-  
+   <!-- Tab Component Start Starts -->
+   <div class="embed-tab-menu w-tab-menu">
+    <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link">
+      <div>Tickets</div>
+    </a>
+      <a data-w-tab="Tab 4" class="embed-tab w-inline-block w-tab-link">
+        <div>Information</div>
+      </a>
+        <a data-w-tab="Tab 5" class="embed-tab w-inline-block w-tab-link w--current">
+          <div>Payment</div>
+        </a>
+      </div>       
+  <!-- Tab Component Start Ends -->
 
   
 
@@ -360,15 +433,17 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 
 
 <!-- Your Order Side Bar Starts -->
-<div class="embed-order-card"><h4 class="embed-order-title">Your order</h4>
+<div class="embed-order-card">
+  <h4 class="embed-order-title">Your order</h4>
   <div class="embed-order-list-items">
-    <div class="embed-order-row"><div>1</div>
+    <div class="embed-order-row">
+      <div>1</div>
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x embed-icon small nudge-left nudge-right grey" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt="">
       <line x1="18" y1="6" x2="6" y2="18"></line>
       <line x1="6" y1="6" x2="18" y2="18"></line>
     </svg>
     <div class="embed-expand">Regular day pass</div>
-    <div class="embed-flex-0"><strong class="embed-bold">₦ 2,500</strong></div>
+    <div class="embed-flex-0"><strong class="embed-bold">₦ 2500</strong></div>
   </div>
   <div class="embed-order-row">
     <div>2</div>

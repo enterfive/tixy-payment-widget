@@ -26,7 +26,10 @@ data-wf-status="1" class=" w-mod-js">
   height="1000"
   autoplay="" 
   loop="" 
-  style="position: absolute; background-image:url(&quot;https://uploads-ssl.webflow.com/5e3ed0eb641ae2c4b8765de8/5e55243771987fddd6103fcd_y2matecom-PalmwineMusicFestival_NKL07vKAFvc_720p(1)-poster-00001.jpg&quot;)" muted="" 
+  style=
+  "position: absolute; 
+  background-image:url('https://uploads-ssl.webflow.com/5e3ed0eb641ae2c4b8765de8/5e55243771987fddd6103fcd_y2matecom-PalmwineMusicFestival_NKL07vKAFvc_720p(1)-poster-00001.jpg')" 
+  muted="" 
   playsinline="" 
   data-wf-ignore="true" 
   data-object-fit="cover"
@@ -62,8 +65,8 @@ data-wf-status="1" class=" w-mod-js">
         <div class="text-block">{{eventDetail.address}}, {{eventDetail.city}}, {{eventDetail.venue}}, Nigeria.</div>
       </div>
       <div class="div-block-3">
-        <button type="button" (click)="sendUrl()" class="button-2 w-button">BUY&nbsp;TICKET</button>
-        <!-- <a [routerLink]="['/buy-a-local-ticket', eventId]" class="button-2 w-button">BUY&nbsp;TICKETS</a> -->
+        <!-- <button type="button" (click)="sendUrl()" class="button-2 w-button">BUY&nbsp;TICKET</button> -->
+        <a [routerLink]="['/buy-a-local-ticket', eventId]" class="button-2 w-button">BUY&nbsp;TICKETS</a>
       </div>
     </div>
   </div>

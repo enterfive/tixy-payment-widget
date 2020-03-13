@@ -81,7 +81,11 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
         <div class="embed-card-carousel">
           <div data-duration-in="300" data-duration-out="100" class="tabs w-tabs">
 
-            <!-- Tab Component Start Starts -->
+  
+            <!-- Entire Ticket Section Starts -->
+            <ng-container *ngIf="ticket" >
+
+               <!-- Tab Component Start Starts -->
             <div class="embed-tab-menu w-tab-menu">
               <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link w--current">
                 <div>Tickets</div>
@@ -95,18 +99,22 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                 </div>       
             <!-- Tab Component Start Ends -->
 
-
-            <!-- Entire Ticket Section Starts -->
-            <ng-container *ngIf="ticket" >
                 <div class="embed-tab-content w-tab-content">
                   <div data-w-tab="Tab 1" class="embed-tab-pane w-tab-pane w--tab-active">
                     <h3 class="heading-6">Pick your tickets</h3>
                     <p class="embed-paragraph push-up">Select one or more tickets to continue</p>
                     <div data-duration-in="300" data-duration-out="100" class="embed-nested-tabs w-tabs">
                       <div class="embed-tab-menu-switch w-tab-menu">
-                        <a routerLink="/buy-a-local-ticket" data-w-tab="Tab 1" class="embed-tab-switch w-inline-block w-tab-link w--current">
-                          <div>Naira prices</div></a>
-                          <a routerLink="/buy-international-ticket" data-w-tab="Tab 3" class="embed-tab-switch w-inline-block w-tab-link">
+                        <a 
+                        [routerLink]="['/buy-a-local-ticket', eventId]"
+                        data-w-tab="Tab 1" 
+                        class="embed-tab-switch w-inline-block w-tab-link">
+                          <div>Naira prices</div>
+                        </a>
+                          <a 
+                          [routerLink]="['/buy-international-ticket', eventId]" 
+                          data-w-tab="Tab 3" 
+                          class="embed-tab-switch w-inline-block w-tab-link w--current">
                             <div>International prices</div></a>
                           </div>
                           <div class="embed-nested-tab-content padded w-tab-content">
@@ -267,10 +275,11 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 </div>
 </div>
 <div class="embed-action-bar _1">
-  <a class="embed-button subtle w-button">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left icon">
+  <a >
+    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left icon">
       <polyline points="15 18 9 12 15 6"></polyline>
-    </svg> Back</a>
+    </svg>  -->
+  </a> 
     <a (click)="toggleInformation()" class="embed-button w-button">Continue 
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right icon">
         <polyline points="9 18 15 12 9 6"></polyline>
@@ -287,6 +296,22 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 
 
 <ng-container *ngIf="information">
+
+ <!-- Tab Component Start Starts -->
+ <div class="embed-tab-menu w-tab-menu">
+  <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link">
+    <div>Tickets</div>
+  </a>
+    <a data-w-tab="Tab 4" class="embed-tab w-inline-block w-tab-link w--current">
+      <div>Information</div>
+    </a>
+      <a data-w-tab="Tab 5" class="embed-tab w-inline-block w-tab-link">
+        <div>Payment</div>
+      </a>
+    </div>       
+<!-- Tab Component Start Ends -->
+
+
 <div  data-w-tab="Tab 4" class="embed-tab-pane w-tab-pane w--tab-active" style="opacity: 1; transition: opacity 300ms ease 0s;">
   <h3 class="heading-6">Fill out buyer and ticket information</h3>
   <div class="w-form">
@@ -425,7 +450,19 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 <ng-container  *ngIf="payment">
   
 
-  
+   <!-- Tab Component Start Starts -->
+ <div class="embed-tab-menu w-tab-menu">
+  <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link">
+    <div>Tickets</div>
+  </a>
+    <a data-w-tab="Tab 4" class="embed-tab w-inline-block w-tab-link">
+      <div>Information</div>
+    </a>
+      <a data-w-tab="Tab 5" class="embed-tab w-inline-block w-tab-link w--current">
+        <div>Payment</div>
+      </a>
+    </div>       
+<!-- Tab Component Start Ends -->
 
 
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { PaymentService } from '../../Service/payment.service';
+import { tick } from '@angular/core/testing';
 
 @Component({
   selector: 'app-buy-a-ticket',
@@ -9,11 +10,13 @@ import { PaymentService } from '../../Service/payment.service';
 })
 export class BuyATicketComponent implements OnInit {
 
+  ticketId
   ticket = true
   information  = false
   payment = false
   eventId;
   ticketDetails;
+  ticketNumber: number = 1;
   constructor(private activatedRoute: ActivatedRoute, private paymentService: PaymentService) { }
 
 
@@ -53,5 +56,24 @@ export class BuyATicketComponent implements OnInit {
     })
   }
 
+  activateClass(ticketDetail){
+    ticketDetail.active = !ticketDetail.active;
+    if(!ticketDetail.active) {
+      return ticketDetail - 1
+    } else {
+      console.log("The Ticket Cat Id", ticketDetail)
+
+    }
+  }
+
+
+
+  activateClassAdd(ticketDetail){
+    ticketDetail.active = false;  
+    
+  }
+  activateClassMinus(ticketDetail){
+    ticketDetail.active = false;    
+  }
 
 }

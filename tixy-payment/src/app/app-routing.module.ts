@@ -8,10 +8,10 @@ import { FrameComponent } from './frame/frame.component';
 
 const routes: Routes = [
   {path: 'event-landing/:id', component: EventPageComponent},
-  {path: 'buy-international-ticket', component: BuyTicketsComponent},
+  {path: 'buy-international-ticket/:id', component: BuyTicketsComponent},
   {path: 'buy-a-local-ticket/:id', component: BuyATicketComponent},
   {path: 'frame', component: FrameComponent},
-  { path: '', redirectTo: '/event-landing/:id', pathMatch: 'full' },
+  { path: '', redirectTo: 'buy-a-local-ticket/:id', pathMatch: 'full' },
 ];
 
 @NgModule({
