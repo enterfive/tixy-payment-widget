@@ -16,6 +16,8 @@ data-wf-status="1" class=" w-mod-js">
 
 <body>
   <!-- Header Section Starts-->
+  <ng-container *ngIf="showEvent">
+    <div *ngFor="let eventDetail of eventDetails">
  <div class="header-section">
    <div data-poster-url="https://uploads-ssl.webflow.com/5e3ed0eb641ae2c4b8765de8/5e55243771987fddd6103fcd_y2matecom - Palmwine Music Festival_NKL07vKAFvc_720p (1)-poster-00001.jpg" data-video-urls="https://uploads-ssl.webflow.com/5e3ed0eb641ae2c4b8765de8/5e55243771987fddd6103fcd_y2matecom - Palmwine Music Festival_NKL07vKAFvc_720p (1)-transcode.mp4,https://uploads-ssl.webflow.com/5e3ed0eb641ae2c4b8765de8/5e55243771987fddd6103fcd_y2matecom - Palmwine Music Festival_NKL07vKAFvc_720p (1)-transcode.webm" data-autoplay="true" data-loop="true" data-wf-ignore="true" class="background-height w-background-video-height w-background-video-atom">
     <div id="responsive-image">
@@ -50,19 +52,23 @@ data-wf-status="1" class=" w-mod-js">
     <div class="container-4 w-container" style="position: relative; padding-bottom: 20px;">
       <div class="div-block-2"><div class="div-block-8"></div>
     </div>
-    <div><h1 class="heading">Show Dem Camp</h1></div>
+    <div><h1 class="heading">{{eventDetail.event_tag}}</h1></div>
     <div>
-      <h1 class="heading-2">Palmwine Music Festival</h1></div>
+      <h1 class="heading-2">{{eventDetail.event_name}}</h1></div>
       <div>
-        <div class="text-block">Saturday, December 28, 2019.</div>
+        <div class="text-block">{{eventDetail.start_date | date:'EEEE, MMMM d, y'}}.</div>
       </div>
       <div>
-        <div class="text-block">Muri Okunola Park, Victoria Island, Lagos, Nigeria.</div>
+        <div class="text-block">{{eventDetail.address}}, {{eventDetail.city}}, {{eventDetail.venue}}, Nigeria.</div>
       </div>
-      <div class="div-block-3"><a routerLink="/buy-a-ticket" class="button-2 w-button">BUY&nbsp;TICKETS</a></div>
+      <div class="div-block-3">
+        <button type="button" (click)="sendUrl()" class="button-2 w-button">BUY&nbsp;TICKET</button>
+        <!-- <a [routerLink]="['/buy-a-local-ticket', eventId]" class="button-2 w-button">BUY&nbsp;TICKETS</a> -->
+      </div>
     </div>
   </div>
 </div>
+
 
       <!-- Header Section Ends-->
     
@@ -92,7 +98,7 @@ data-wf-status="1" class=" w-mod-js">
             </div>
             <div class="div-block-4">
               <div class="text-block-2">
-                In 2017, Show Dem Camp launched the Palmwine Music Festival, a live music experience created as a platform to celebrate and experience Nigeria’s burgeoning alternative music scene. The festival incorporates live music with art, food, DJ sets, merchandise and of course Palmwine. <br>‍<br>The first edition in 2017 was a success with over 2500 fans in attendance. The 2018 edition witnessed over 5000 fans thrilled by sounds from Show Dem Camp’s popular Palmwine Music 2 album as well as a stellar line-up of guest artists like Teni the Entertainer, Falz, Ladipoe, MI and many others.</div>
+               {{eventDetail.description}}.</div>
             </div>
           </div>
           <div id="DateTime" class="container-6 w-container">
@@ -102,8 +108,8 @@ data-wf-status="1" class=" w-mod-js">
             <div class="div-block-6"></div>
             <div class="div-block-7">
               <a href="#" class="button-3 w-button">+<br>Save the date</a>
-              <div class="text-block-3">Sat, December 28, 2019<br>
-                <span class="text-span">07:00 PM till dawn</span>
+              <div class="text-block-3">{{eventDetail.start_date | date:'EEEE, MMMM d, y'}}.<br>
+                <span class="text-span">{{eventDetail.start_date | date:'h:mm a'}} till dawn</span>
               </div>
             </div>
           </div>
@@ -113,7 +119,7 @@ data-wf-status="1" class=" w-mod-js">
             </div>
             <div class="div-block-6"></div>
             <div class="div-block-9">
-              <div class="text-block-4">Muri Okunola Park, Victoria Island, Lagos, Nigeria.</div>
+              <div class="text-block-4">{{eventDetail.address}}, {{eventDetail.city}}, {{eventDetail.venue}}, Nigeria.</div>
               <div class="text-block-5">Get Directions</div>
             </div>
           </div>
@@ -162,7 +168,9 @@ data-wf-status="1" class=" w-mod-js">
                     <div class="column-6 w-col w-col-2 w-col-tiny-3 w-col-small-3">
                       <img src="https://uploads-ssl.webflow.com/5e3ed0eb641ae2c4b8765de8/5e503b6629f86603b4829fb5_Path%20829%402x.png" 
                       width="10" alt="">
+                     
                     </div>
+                    
                     <div class="column-7 w-col w-col-2 w-col-tiny-3 w-col-small-3">
                       <img src="https://uploads-ssl.webflow.com/5e3ed0eb641ae2c4b8765de8/5e503ba2a160d099afa5c754_twitter%402x.png" width="21" alt="">
                     </div>
@@ -202,5 +210,28 @@ data-wf-status="1" class=" w-mod-js">
               </div>
             </div>
           </div>
+        </div>
+        </ng-container>
+      
+
+        <ng-container *ngIf="showIframe">
+          <iframe 
+          [src]="iframeURL"
+          style="
+          position:fixed; 
+          top:0; 
+          left:0; 
+          bottom:0; 
+          right:0; 
+          width:100%; 
+          height:100%; 
+          border:none; 
+          margin:0; 
+          padding:0; 
+          overflow:hidden;"
+          >Alternative text</iframe>
+        </ng-container>
+
+
 </body>
 </html>

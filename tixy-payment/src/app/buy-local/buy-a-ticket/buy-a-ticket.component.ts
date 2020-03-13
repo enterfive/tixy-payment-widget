@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Router, ActivatedRoute, Params} from '@angular/router';
+import { PaymentService } from '../../Service/payment.service';
 
 @Component({
   selector: 'app-buy-a-ticket',
@@ -10,7 +12,9 @@ export class BuyATicketComponent implements OnInit {
   ticket = true
   information  = false
   payment = false
-  constructor() { }
+  eventId;
+  ticketDetails;
+  constructor(private activatedRoute: ActivatedRoute, private paymentService: PaymentService) { }
 
 
   toggleTicket(){
@@ -33,9 +37,21 @@ export class BuyATicketComponent implements OnInit {
   }
 
 
-
-
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe(params => {
+      this.eventId = params['id'];
+     console.log(this.eventId);
+   });
+   this.getOpenEventDetails()
   }
+
+  getOpenEventDetails(){
+    const eventId = this.eventId
+    this.paymentService.getOpenTicketCategory(eventId).subscribe( (res:any) => {
+      this.ticketDetails = res;
+      console.log(this.ticketDetails)
+    })
+  }
+
 
 }

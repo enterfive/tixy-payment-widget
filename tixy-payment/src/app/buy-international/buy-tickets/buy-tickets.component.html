@@ -23,6 +23,25 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 </head>
 
 <body class="body pattern-2">
+  <div class="h-full row fill center">
+    <a 
+    data-w-id="7e19bbe1-2c28-e59b-5127-b7db0a19a342" 
+    class="button w-button">
+    <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    stroke-width="2" 
+    stroke-linecap="round" 
+    stroke-linejoin="round" 
+    class="feather feather-credit-card icon move-left">
+    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+    <line x1="1" y1="10" x2="23" y2="10"></line>
+  </svg> Test buying a ticket</a>
+</div>
 <div style="display: flex; opacity: 1;" class="embed-wrapper">
   <div class="embed-action-bar _2">
     <a href="#" class="embed-button subtle w-button">
@@ -94,13 +113,12 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                             <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
 
                              <!-- Pick Your Ticket Card Starts -->
-                              <div class="embed-ticket active" *ngFor="let ticketDetail of ticketDetails" >
-                                <div >
+                              <div class="embed-ticket active"><div>
                                 <div class="row center v-mobile left-mobile">
-                                  <div><h4 class="plan-title">{{ticketDetail.category_name}}</h4>
-                                    <p class="embed-paragraph small">{{ticketDetail.description}}.</p></div>
+                                  <div><h4 class="plan-title">Regular day pass</h4>
+                                    <p class="embed-paragraph small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p></div>
                                     <div class="embed-pricing">
-                                      <div class="embed-ticket-price active">₦ {{ticketDetail.price}}</div>
+                                      <div class="embed-ticket-price active">₦ 2,500</div>
                                       <div class="embed-ticket-quantity">
                                         <div class="embed-icon-wrap">
                                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus embed-icon small" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt=""><line x1="5" y1="12" x2="19" y2="12"></line>
@@ -134,6 +152,116 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                               
                              <!-- Pick Your Ticket Card Ends -->
             </div>
+            <div data-w-tab="Tab 3" class="w-tab-pane">
+              <div class="embed-ticket active"><div>
+                <div class="row center v-mobile left-mobile">
+                  <div><h4 class="plan-title">Regular day pass</h4>
+                    <p class="embed-paragraph small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
+                  </div>
+                  <div class="embed-pricing">
+                    <div class="embed-ticket-price active">$ 20</div>
+                    <div class="embed-ticket-quantity">
+                      <div class="embed-icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus embed-icon small" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt="">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                      </div>
+                      <div class="embed-form-block w-form">
+                        <form id="email-form" name="email-form" data-name="Email Form">
+                          <input type="text" class="text-field w-input" maxlength="256" name="name-6" data-name="Name 6" placeholder="1" id="name-6">
+                        </form>
+                        <div class="w-form-done">
+                          <div>Thank you! Your submission has been received!</div>
+                        </div>
+                        <div class="w-form-fail">
+                          <div>Oops! Something went wrong while submitting the form.</div>
+                        </div>
+                      </div>
+                      <div class="embed-icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus embed-icon small" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt="">
+                          <line x1="12" y1="5" x2="12" y2="19"></line>
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="embed-ticket active">
+              <div>
+                <div class="row center v-mobile left-mobile"><div>
+                  <h4 class="plan-title">VIP</h4>
+                  <p class="embed-paragraph small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
+                </div>
+                <div class="embed-pricing">
+                  <div class="embed-ticket-price active">$ 140</div>
+                  <div class="embed-ticket-quantity">
+                    <div class="embed-icon-wrap">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus embed-icon small" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt="">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                      </svg>
+                    </div>
+                    <div class="embed-form-block w-form">
+                      <form id="email-form" name="email-form" data-name="Email Form">
+                        <input type="text" class="text-field w-input" maxlength="256" name="name-3" data-name="Name 3" placeholder="2" id="name-3">
+                      </form>
+                      <div class="w-form-done">
+                        <div>Thank you! Your submission has been received!</div>
+                      </div>
+                      <div class="w-form-fail">
+                        <div>Oops! Something went wrong while submitting the form.</div>
+                      </div>
+                    </div>
+                    <div class="embed-icon-wrap">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus embed-icon small" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt="">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="embed-ticket">
+            <div>
+              <div class="row center v-mobile left-mobile"><div>
+                <h4 class="plan-title">VIP &amp; Backstage pass</h4>
+                <p class="embed-paragraph small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.
+                </p>
+              </div>
+              <div class="embed-pricing">
+                <div class="embed-ticket-price">$ 180</div>
+                <div class="embed-ticket-quantity">
+                  <div class="embed-icon-wrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus embed-icon small" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt="">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                  </div>
+                  <div class="embed-form-block w-form">
+                    <form id="email-form" name="email-form" data-name="Email Form">
+                      <input type="text" class="text-field w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="0" id="name-2">
+                    </form>
+                    <div class="w-form-done">
+                      <div>Thank you! Your submission has been received!</div>
+                    </div>
+                    <div class="w-form-fail">
+                      <div>Oops! Something went wrong while submitting the form.</div>
+                    </div>
+                  </div>
+                  <div class="embed-icon-wrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus embed-icon small" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt="">
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
   </div>
 </div>
 </div>
