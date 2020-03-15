@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: 'buy-international-ticket/:id', component: BuyTicketsComponent},
   {path: 'buy-a-local-ticket/:id', component: BuyATicketComponent},
   {path: 'frame', component: FrameComponent},
-  { path: '', redirectTo: 'buy-a-local-ticket/:id', pathMatch: 'full' },
+  { path: '', redirectTo: '/event-landing/:id', pathMatch: 'full' },
 ];
 
 @NgModule({

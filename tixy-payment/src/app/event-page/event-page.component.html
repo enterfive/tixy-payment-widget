@@ -14,9 +14,8 @@ data-wf-status="1" class=" w-mod-js">
 </head>
 
 
-<body>
   <!-- Header Section Starts-->
-  <ng-container *ngIf="showEvent">
+  <!-- <ng-container *ngIf="showEvent">
     <div *ngFor="let eventDetail of eventDetails">
  <div class="header-section">
    <div data-poster-url="https://uploads-ssl.webflow.com/5e3ed0eb641ae2c4b8765de8/5e55243771987fddd6103fcd_y2matecom - Palmwine Music Festival_NKL07vKAFvc_720p (1)-poster-00001.jpg" data-video-urls="https://uploads-ssl.webflow.com/5e3ed0eb641ae2c4b8765de8/5e55243771987fddd6103fcd_y2matecom - Palmwine Music Festival_NKL07vKAFvc_720p (1)-transcode.mp4,https://uploads-ssl.webflow.com/5e3ed0eb641ae2c4b8765de8/5e55243771987fddd6103fcd_y2matecom - Palmwine Music Festival_NKL07vKAFvc_720p (1)-transcode.webm" data-autoplay="true" data-loop="true" data-wf-ignore="true" class="background-height w-background-video-height w-background-video-atom">
@@ -64,18 +63,22 @@ data-wf-status="1" class=" w-mod-js">
       <div>
         <div class="text-block">{{eventDetail.address}}, {{eventDetail.city}}, {{eventDetail.venue}}, Nigeria.</div>
       </div>
-      <div class="div-block-3">
+      <div class="div-block-3"> -->
         <!-- <button type="button" (click)="sendUrl()" class="button-2 w-button">BUY&nbsp;TICKET</button> -->
-        <a [routerLink]="['/buy-a-local-ticket', eventId]" class="button-2 w-button">BUY&nbsp;TICKETS</a>
-      </div>
+        <a 
+        [routerLink]="['/buy-a-local-ticket', eventId]" 
+        class="button-2 w-button"
+        style="margin-right: 20%; margin-top: 20%; margin-bottom: 20%; margin-left: 45%;"
+        >BUY&nbsp;TICKETS</a>
+      <!-- </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
       <!-- Header Section Ends-->
     
-    <div class="sticky-navbar">
+    <!-- <div class="sticky-navbar">
       <div data-collapse="medium" data-animation="default" data-duration="400" class="navbar-2 w-nav">
         <div class="container w-container">
           <nav role="navigation" class="w-nav-menu">
@@ -233,8 +236,15 @@ data-wf-status="1" class=" w-mod-js">
           padding:0; 
           overflow:hidden;"
           >Alternative text</iframe>
-        </ng-container>
+        </ng-container> -->
 
 
-</body>
+
+
+        
+
+
+
+
+
 </html>

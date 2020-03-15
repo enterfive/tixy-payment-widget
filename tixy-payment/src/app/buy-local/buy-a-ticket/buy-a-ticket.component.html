@@ -104,7 +104,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                              <!-- Pick Your Ticket Card Starts -->
                               <div 
                               class="embed-ticket" 
-                              *ngFor="let ticketDetail of ticketDetails" 
+                              *ngFor="let ticketDetail of ticketDetails; let index = index" 
                               (click)="activateClass(ticketDetail)"                            
                               [ngClass]="{'active': ticketDetail.active}"
                               >
@@ -113,11 +113,14 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                                   <div><h4 class="plan-title">{{ticketDetail.category_name}}</h4>
                                     <p class="embed-paragraph small">{{ticketDetail.description}}.</p></div>
                                     <div class="embed-pricing">
-                                      <div class="embed-ticket-price active">₦ {{ticketDetail.price}} </div>
+                                      <div 
+                                      class="embed-ticket-price active">
+                                      ₦ {{ ticketDetail.counterPrice || ticketDetail.price}} 
+                                    </div>
                                       <div class="embed-ticket-quantity">
                                         <div 
                                         class="embed-icon-wrap"
-                                        (click)="activateClassMinus(ticketDetail)"
+                                        (click)="activateClassMinus(ticketDetail,index)"
                                         >
                                           <svg 
                                           xmlns="http://www.w3.org/2000/svg" 
@@ -143,7 +146,14 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                                         </div>
                                         <div class="embed-form-block w-form">
                                           <form id="email-form" name="email-form" data-name="Email Form">
-                                            <input type="text" class="text-field w-input" maxlength="256" name="name-7" data-name="Name 7" placeholder="{{ticketNumber}}" id="name-7">
+                                            <input 
+                                            type="text" 
+                                            class="text-field w-input" 
+                                            maxlength="256" name="name-7" 
+                                            data-name="Name 7" 
+                                            placeholder="{{ticketDetail.counter || 1}}" 
+                                            id="name-7"
+                                            >
                                           </form>
                                           <div class="w-form-done">
                                             <div>Thank you! Your submission has been received!</div>
@@ -155,7 +165,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                                         </div>
                                         <div 
                                         class="embed-icon-wrap"
-                                        (click)="activateClassMinus(ticketDetail)"
+                                        (click)="activateClassAdd(ticketDetail,index)"
                                         >
                                           <svg 
                                           xmlns="http://www.w3.org/2000/svg" 
@@ -176,7 +186,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
+                                  </div>  
                                 </div>
                               </div>
                              <!-- Pick Your Ticket Card Ends -->
@@ -249,10 +259,12 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
           </div>
         </div>
       </div>
-      <div class="embed-form-row">
+
+      <!-- Dynamic Ticket Category Starts -->
+      <div class="embed-form-row" *ngFor="let ticket of ticketDetails| keyvalue; let i = index">
         <div class="embed-section-column">
           <div class="embed-form-section-sticky">
-            <h4 class="embed-heading">1. Regular day pass</h4>
+            <h4 class="embed-heading"> {{i+1}}. {{ticket.value.category_name}}</h4>
             <label class="w-checkbox embed-checkbox">
               <input type="checkbox" id="checkbox-2" name="checkbox-2" data-name="Checkbox 2" checked="" class="w-checkbox-input embed-checkbox-component"><span class="w-form-label">Same as buyer information</span>
             </label>
@@ -273,56 +285,8 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
           </div>
         </div>
       </div>
-      <div class="embed-form-row">
-        <div class="embed-section-column">
-          <div class="embed-form-section-sticky">
-            <h4 class="embed-heading">2. VIP</h4>
-            <label class="w-checkbox embed-checkbox">
-              <input type="checkbox" id="checkbox-2" name="checkbox-2" data-name="Checkbox 2" class="w-checkbox-input embed-checkbox-component">
-              <span class="w-form-label">Same as buyer information</span>
-            </label>
-          </div>
-        </div>
-        <div class="embed-expand">
-          <div>
-            <label for="name-6" class="embed-label">First name</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
-          </div>
-          <div>
-            <label for="name-6" class="embed-label">Last name</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
-          </div>
-          <div>
-            <label for="name-6" class="embed-label">Email address</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
-          </div>
-        </div>
-      </div>
-      <div class="embed-form-row">
-        <div class="embed-section-column">
-          <div class="embed-form-section-sticky">
-            <h4 class="embed-heading">3. VIP</h4>
-            <label class="w-checkbox embed-checkbox">
-              <input type="checkbox" id="checkbox-2" name="checkbox-2" data-name="Checkbox 2" class="w-checkbox-input embed-checkbox-component">
-              <span class="w-form-label">Same as buyer information</span>
-            </label>
-          </div>
-        </div>
-        <div class="embed-expand">
-          <div>
-            <label for="name-6" class="embed-label">First name</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
-          </div>
-          <div>
-            <label for="name-6" class="embed-label">Last name</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
-          </div>
-          <div>
-            <label for="name-6" class="embed-label">Email address</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
-          </div>
-        </div>
-      </div>
+      <!-- Dynamic Ticket Category Ends -->
+    
     </form>
     <div class="w-form-done">
       <div>Thank you! Your submission has been received!</div>

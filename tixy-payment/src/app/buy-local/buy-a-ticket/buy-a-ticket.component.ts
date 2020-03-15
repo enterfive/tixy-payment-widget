@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { PaymentService } from '../../Service/payment.service';
-import { tick } from '@angular/core/testing';
 
 @Component({
   selector: 'app-buy-a-ticket',
@@ -16,7 +15,7 @@ export class BuyATicketComponent implements OnInit {
   payment = false
   eventId;
   ticketDetails;
-  ticketNumber: number = 1;
+  log: number = 1;
   constructor(private activatedRoute: ActivatedRoute, private paymentService: PaymentService) { }
 
 
@@ -45,10 +44,10 @@ export class BuyATicketComponent implements OnInit {
       this.eventId = params['id'];
      console.log(this.eventId);
    });
-   this.getOpenEventDetails()
+   this.getOpenEventTicket()
   }
 
-  getOpenEventDetails(){
+  getOpenEventTicket(){
     const eventId = this.eventId
     this.paymentService.getOpenTicketCategory(eventId).subscribe( (res:any) => {
       this.ticketDetails = res;
@@ -66,14 +65,30 @@ export class BuyATicketComponent implements OnInit {
     }
   }
 
+  activateClassAdd(ticketDetail,index){
+    ticketDetail.active = false;
 
-
-  activateClassAdd(ticketDetail){
-    ticketDetail.active = false;  
-    
+    const selectedTic = this.ticketDetails[index]
+    if(selectedTic.counter) { 
+     selectedTic.counter++;
+     const newPrice = selectedTic.price * selectedTic.counter;
+     selectedTic.counterPrice = newPrice
+    } else {
+      selectedTic.counter = 1 
+    } 
   }
-  activateClassMinus(ticketDetail){
+
+  activateClassMinus(ticketDetail,index){
     ticketDetail.active = false;    
-  }
-
+    const selectedTic = this.ticketDetails[index]  
+    if(selectedTic.counter && selectedTic.counter >= 1) {
+     selectedTic.counter--;
+     const newPrice = selectedTic.price * selectedTic.counter;
+     selectedTic.counterPrice = newPrice
+    } else {
+     //  selectedTic.counter = 0
+    }
+ }
 }
+
+
