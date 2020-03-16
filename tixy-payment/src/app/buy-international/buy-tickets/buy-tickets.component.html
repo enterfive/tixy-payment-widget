@@ -236,7 +236,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 
 
 <ng-container *ngIf="information">
-
+<form style="overflow: scroll">
  <!-- Tab Component Start Starts -->
  <div class="embed-tab-menu w-tab-menu">
   <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link">
@@ -252,10 +252,13 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 <!-- Tab Component Start Ends -->
 
 
-<div  data-w-tab="Tab 4" class="embed-tab-pane w-tab-pane w--tab-active" style="opacity: 1; transition: opacity 300ms ease 0s;">
+<div  
+data-w-tab="Tab 4" 
+class="pan w-tab-pane w--tab-active" 
+style="opacity: 1; transition: opacity 300ms ease 0s;">
   <h3 class="heading-6">Fill out buyer and ticket information</h3>
   <div class="w-form">
-    <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="embed-form">
+    <form class="embed-form">
       <div class="embed-form-row">
         <div class="embed-section-column">
           <div class="embed-form-section-sticky">
@@ -281,6 +284,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
           </div>
         </div>
       </div>
+
        <!-- Dynamic Ticket Category Starts -->
        <div class="embed-form-row" *ngFor="let ticket of ticketDetails| keyvalue; let i = index">
         <div class="embed-section-column">
@@ -307,15 +311,22 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
         </div>
       </div>
       <!-- Dynamic Ticket Category Ends -->
+      
     </form>
+
+   
+
     <div class="w-form-done">
       <div>Thank you! Your submission has been received!</div>
     </div>
     <div class="w-form-fail">
       <div>Oops! Something went wrong while submitting the form.</div>
     </div>
+    
   </div>
 </div>
+
+
 <div class="embed-action-bar _1">
   <a (click)="toggleTicket()" class="embed-button subtle w-button">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left icon">
@@ -327,6 +338,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
       </svg>
     </a>
   </div>
+</form>
 </ng-container>
 
 

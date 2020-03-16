@@ -19,7 +19,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 <script src="https://js.stripe.com/v3/"></script>
-<link id="load-css-button.min.css" rel="stylesheet" type="text/css" href="https://paystack.com/public/css/button.min.css">
+<!-- <link id="load-css-button.min.css" rel="stylesheet" type="text/css" href="https://paystack.com/public/css/button.min.css"> -->
 </head>
 
 <body class="body pattern-2">
@@ -105,8 +105,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                               <div 
                               class="embed-ticket" 
                               *ngFor="let ticketDetail of ticketDetails; let index = index" 
-                              (click)="activateClass(ticketDetail)"                            
-                              [ngClass]="{'active': ticketDetail.active}"
+                              [ngClass]="{'active': ticketDetail.counter > 0 }"
                               >
                                 <div>
                                 <div class="row center v-mobile left-mobile">
@@ -151,7 +150,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                                             class="text-field w-input" 
                                             maxlength="256" name="name-7" 
                                             data-name="Name 7" 
-                                            placeholder="{{ticketDetail.counter || 1}}" 
+                                            placeholder="{{ticketDetail.counter || 0}}" 
                                             id="name-7"
                                             >
                                           </form>
@@ -215,8 +214,8 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 
  <!-- Entire Information Section Starts -->
 
-
-<ng-container *ngIf="information">
+ <ng-container *ngIf="information">
+  <form [formGroup]="userprofileform" (ngSubmit)="onSubmit()" style="overflow: scroll">
    <!-- Tab Component Start Starts -->
    <div class="embed-tab-menu w-tab-menu">
     <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link">
@@ -230,85 +229,150 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
         </a>
       </div>       
   <!-- Tab Component Start Ends -->
-<div  data-w-tab="Tab 4" class="embed-tab-pane w-tab-pane w--tab-active" style="opacity: 1; transition: opacity 300ms ease 0s;">
-  <h3 class="heading-6">Fill out buyer and ticket information</h3>
-  <div class="w-form">
-    <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="embed-form">
-      <div class="embed-form-row">
-        <div class="embed-section-column">
-          <div class="embed-form-section-sticky">
-            <h4 class="embed-heading">Buyer information</h4>
-            <label class="w-checkbox embed-checkbox">
-              <input type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="w-checkbox-input embed-checkbox-component">
-              <span class="w-form-label">Copy buyer information to all tickets</span>
-            </label>
+  
+  
+  <div  
+  data-w-tab="Tab 4" 
+  class="pan w-tab-pane w--tab-active" 
+  style="opacity: 1; transition: opacity 300ms ease 0s;">
+    <h3 class="heading-6">Fill out buyer and ticket information</h3>
+    <div class="w-form">
+      <!-- <form class="embed-form"> -->
+        <div class="embed-form-row">
+          <div class="embed-section-column">
+            <div class="embed-form-section-sticky">
+              <h4 class="embed-heading">Buyer information</h4>
+              <label class="w-checkbox embed-checkbox">
+                <input type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="w-checkbox-input embed-checkbox-component">
+                <span class="w-form-label">Copy buyer information to all tickets</span>
+              </label>
+            </div>
+          </div>
+          <div class="embed-expand">
+            <div>
+              <label for="name-5" class="embed-label">First name</label>
+              <input 
+              type="text" 
+              class="embed-input w-input" 
+              maxlength="256" 
+              name="name-5" 
+              data-name="Name 5" 
+              id="name-5"
+              formControlName="firstname"
+              >
+            </div>
+            <div>
+              <label for="name-6" class="embed-label">Last name</label>
+              <input 
+              type="text" 
+              class="embed-input w-input" 
+              maxlength="256" 
+              name="name-5" 
+              data-name="Name 5" 
+              id="name-5"
+              formControlName="lastname"
+              >
+            </div>
+            <div>
+              <label for="name-6" class="embed-label">Email address</label>
+              <input 
+              type="text" 
+              class="embed-input w-input" 
+              maxlength="256" 
+              name="name-5" 
+              data-name="Name 5" 
+              id="name-5"
+              formControlName="email"
+              >
+            </div>
           </div>
         </div>
-        <div class="embed-expand">
-          <div>
-            <label for="name-5" class="embed-label">First name</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
+  
+         <!-- Dynamic Ticket Category Starts -->
+         <div 
+         formGroupName="attendees" 
+         class="embed-form-row" 
+         *ngFor="let ticket of ticketDetails| keyvalue; let i = index">
+          <div class="embed-section-column">
+            <div class="embed-form-section-sticky">
+              <h4 class="embed-heading"> {{i+1}}. {{ticket.value.category_name}}</h4>
+              <label class="w-checkbox embed-checkbox">
+                <input type="checkbox" id="checkbox-2" name="checkbox-2" data-name="Checkbox 2" checked="" class="w-checkbox-input embed-checkbox-component"><span class="w-form-label">Same as buyer information</span>
+              </label>
+            </div>
           </div>
-          <div>
-            <label for="name-6" class="embed-label">Last name</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
-          </div>
-          <div>
-            <label for="name-6" class="embed-label">Email address</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
+          <div class="embed-expand">
+            <div>
+              <label for="name-6" class="embed-label">First name</label>
+              <input 
+              type="text" 
+              class="embed-input w-input" 
+              maxlength="256" 
+              name="name-5" 
+              data-name="Name 5" 
+              formControlName="fname"
+              >
+            </div>
+            <div>
+              <label for="name-6" class="embed-label">Last name</label>
+              <input 
+              type="text" 
+              class="embed-input w-input" 
+              maxlength="256" 
+              name="name-5" 
+              data-name="Name 5" 
+              id="name-5"
+              formControlName="lname"
+              >
+            </div>
+            <div>
+              <label for="name-6" class="embed-label">Email address</label>
+              <input 
+              type="email" 
+              class="embed-input w-input" 
+              maxlength="256" 
+              name="name-5" 
+              data-name="Name 5" 
+              id="name-5"
+              formControlName="mail"
+              >
+            </div>
           </div>
         </div>
+        <!-- Dynamic Ticket Category Ends -->
+        
+      <!-- </form> -->
+  
+     
+  
+      <div class="w-form-done">
+        <div>Thank you! Your submission has been received!</div>
       </div>
-
-      <!-- Dynamic Ticket Category Starts -->
-      <div class="embed-form-row" *ngFor="let ticket of ticketDetails| keyvalue; let i = index">
-        <div class="embed-section-column">
-          <div class="embed-form-section-sticky">
-            <h4 class="embed-heading"> {{i+1}}. {{ticket.value.category_name}}</h4>
-            <label class="w-checkbox embed-checkbox">
-              <input type="checkbox" id="checkbox-2" name="checkbox-2" data-name="Checkbox 2" checked="" class="w-checkbox-input embed-checkbox-component"><span class="w-form-label">Same as buyer information</span>
-            </label>
-          </div>
-        </div>
-        <div class="embed-expand">
-          <div>
-            <label for="name-6" class="embed-label">First name</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
-          </div>
-          <div>
-            <label for="name-6" class="embed-label">Last name</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
-          </div>
-          <div>
-            <label for="name-6" class="embed-label">Email address</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
-          </div>
-        </div>
+      <div class="w-form-fail">
+        <div>Oops! Something went wrong while submitting the form.</div>
       </div>
-      <!-- Dynamic Ticket Category Ends -->
-    
-    </form>
-    <div class="w-form-done">
-      <div>Thank you! Your submission has been received!</div>
-    </div>
-    <div class="w-form-fail">
-      <div>Oops! Something went wrong while submitting the form.</div>
+      
     </div>
   </div>
-</div>
-<div class="embed-action-bar _1">
-  <a (click)="toggleTicket()" class="embed-button subtle w-button">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left icon">
-      <polyline points="15 18 9 12 15 6"></polyline>
-    </svg> Back</a>
-    <a (click)="togglePayment()" class="embed-button w-button">Continue 
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right icon">
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-    </a>
-  </div>
-</ng-container>
-
+  
+  
+  <div class="embed-action-bar _1">
+    <a (click)="toggleTicket()" class="embed-button subtle w-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left icon">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg> Back</a>
+      <button 
+      class="embed-button w-button"
+      [disabled]="!userprofileform.valid"
+      
+      >Continue 
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right icon">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </form>
+  </ng-container>
 
 
 
@@ -318,8 +382,8 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 
 
  <!-- Entire Payment Section Starts -->
-
-<ng-container  *ngIf="payment">
+<ng-container *ngIf="payment">
+<div [hidden]="hidden">
    <!-- Tab Component Start Starts -->
    <div class="embed-tab-menu w-tab-menu">
     <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link">
@@ -335,9 +399,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
   <!-- Tab Component Start Ends -->
 
   
-
-
-
+  <div id="paystackEmbedContainer" ></div>
 
 
 
@@ -353,6 +415,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
     </a>
   </div>
 
+</div>
 </ng-container>
 
  <!-- Entire Payment Section Ends -->
@@ -385,11 +448,6 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 
 
 
-
-
-
-
-
 </div>
 
 
@@ -397,32 +455,33 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 
 
 <!-- Your Order Side Bar Starts -->
-<div class="embed-order-card">
+<ng-container *ngIf="ticketDetails ">
+<div 
+class="embed-order-card"
+>
   <h4 class="embed-order-title">Your order</h4>
   <div class="embed-order-list-items">
-    <div class="embed-order-row">
-      <div>1</div>
+    <div 
+    class="embed-order-row" 
+    *ngFor="let ticketDetail of ticketDetails; let index = index" 
+    
+    [style.display]="ticketDetail.counter > 0 ? 'flex' : 'none'"
+    >
+    
+      <div>{{index+1}}</div>
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x embed-icon small nudge-left nudge-right grey" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt="">
       <line x1="18" y1="6" x2="6" y2="18"></line>
       <line x1="6" y1="6" x2="18" y2="18"></line>
     </svg>
-    <div class="embed-expand">Regular day pass</div>
-    <div class="embed-flex-0"><strong class="embed-bold">₦ 2500</strong></div>
-  </div>
-  <div class="embed-order-row">
-    <div>2</div>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x embed-icon small nudge-left nudge-right grey" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt="">
-      <line x1="18" y1="6" x2="6" y2="18"></line>
-      <line x1="6" y1="6" x2="18" y2="18"></line>
-    </svg>
-    <div class="embed-expand">VIP</div>
-    <div class="embed-flex-0">
-      <strong class="embed-bold">₦ 70,000</strong></div>
+    <div class="embed-expand">{{ticketDetail.category_name}}</div>
+    <div class="embed-flex-0"><strong class="embed-bold">₦ {{ ticketDetail.counterPrice || ticketDetail.price}}</strong>
     </div>
+  </div>
+  
     <div class="embed-divider"></div>
     <div class="embed-order-row small">
       <div class="embed-expand">Subtotal</div>
-      <div class="embed-flex-0">₦ 72,500</div>
+      <div class="embed-flex-0">₦ {{  ticketDetails.price}}</div>
     </div>
     <div class="embed-order-row small">
       <div class="embed-expand">Fees</div>
@@ -438,6 +497,8 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
     </div>
   </div>
 </div>
+</ng-container>
+
 <!-- Your Order Side Bar Ends -->
 </div>
 <div class="embed-footer">
