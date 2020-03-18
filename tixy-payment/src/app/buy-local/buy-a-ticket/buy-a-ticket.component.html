@@ -383,7 +383,6 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 
 
  <!-- Entire Payment Section Starts -->
-<ng-container>
 <div  *ngIf="payment">
    <!-- Tab Component Start Starts -->
    <div class="embed-tab-menu w-tab-menu">
@@ -400,7 +399,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
   <!-- Tab Component Start Ends -->
 
   
-  <div id="paystackEmbedContainer"></div>
+  <div id="paystackEmbedContainer" (load)="loadPaystackModal()"></div>
 
 
 
@@ -417,7 +416,6 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
   </div>
 
 </div>
-</ng-container>
 
  <!-- Entire Payment Section Ends -->
 

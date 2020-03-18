@@ -86,6 +86,10 @@ export class BuyATicketComponent implements OnInit {
     this.payment = false
   }
 
+  loadPaystackModal(){
+    console.log('*** loading paystack modal...');
+  }
+
 
   // ngAfterInit(){
     
@@ -96,11 +100,11 @@ export class BuyATicketComponent implements OnInit {
   //   this.information = false
   // }
 
-ngAfterViewChecked() {
+loadPayStackModal() {
   let shown = document.getElementById('paystackEmbedContainer')
   console.log(shown ? 'shown' : 'not shown');
   // setTimeout( () => {
-  if(shown){
+  // if(shown){
     (<any>window).PaystackPop.setup({
       key: 'pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5',
       email: 'customer@email.com',
@@ -112,7 +116,7 @@ ngAfterViewChecked() {
      
    });
    
-  }
+  // }
 // }, 2000)
 }
 
@@ -187,12 +191,13 @@ ngAfterViewChecked() {
 
 
  sendUrl() {
-  this.showIframe = true
-  let playerUrl = `https://paystack.com/assets/payment/production/inline.html?id=paystack7jWUC&amp;key=pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5&amp;email=customer%40email.com&amp;amount=10000&amp;currency=NGN&amp;container=paystackEmbedContainer&amp;metadata=%7B%22referrer%22%3A%22https%3A%2F%2Ftixy-2-0.webflow.io%2Fbuy-a-ticket-alt%22%7D&amp;mode=popup&amp;hasTLSFallback=true` // try it first, if it doesn't work use the sanitized URL
-  this.trustedDashboardUrl = this._sanitizer.bypassSecurityTrustResourceUrl(playerUrl);
-  this.iframeURL = this.trustedDashboardUrl;
-  console.log( this.iframeURL)
+  // this.showIframe = true
+  // let playerUrl = `https://paystack.com/assets/payment/production/inline.html?id=paystack7jWUC&amp;key=pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5&amp;email=customer%40email.com&amp;amount=10000&amp;currency=NGN&amp;container=paystackEmbedContainer&amp;metadata=%7B%22referrer%22%3A%22https%3A%2F%2Ftixy-2-0.webflow.io%2Fbuy-a-ticket-alt%22%7D&amp;mode=popup&amp;hasTLSFallback=true` // try it first, if it doesn't work use the sanitized URL
+  // this.trustedDashboardUrl = this._sanitizer.bypassSecurityTrustResourceUrl(playerUrl);
+  // this.iframeURL = this.trustedDashboardUrl;
+  // console.log( this.iframeURL)
 }
+
 }
 
 
