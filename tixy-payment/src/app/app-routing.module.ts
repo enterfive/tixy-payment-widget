@@ -4,6 +4,7 @@ import { EventPageComponent } from './event-page/event-page.component';
 import { BuyATicketComponent } from './buy-local/buy-a-ticket/buy-a-ticket.component';
 import { BuyTicketsComponent } from './buy-international/buy-tickets/buy-tickets.component';
 import { FrameComponent } from './frame/frame.component';
+import { PaymentComponent } from './buy-local/payment/payment.component';
 
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   {path: 'buy-international-ticket/:id', component: BuyTicketsComponent},
   {path: 'buy-a-local-ticket/:id', component: BuyATicketComponent},
   {path: 'frame', component: FrameComponent},
+  {path: 'payment', component: PaymentComponent},
   { path: '', redirectTo: '/event-landing/:id', pathMatch: 'full' },
 ];
 

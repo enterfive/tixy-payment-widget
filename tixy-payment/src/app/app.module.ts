@@ -11,6 +11,7 @@ import { BuyATicketComponent } from './buy-local/buy-a-ticket/buy-a-ticket.compo
 import { BuyTicketsComponent } from './buy-international/buy-tickets/buy-tickets.component';
 import { PaymentService } from './Service/payment.service';
 import { FrameComponent } from './frame/frame.component';
+import { PaymentComponent } from './buy-local/payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FrameComponent } from './frame/frame.component';
     EventPageComponent,
     BuyATicketComponent,
     BuyTicketsComponent,
-    FrameComponent
+    FrameComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,

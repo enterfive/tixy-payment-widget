@@ -121,91 +121,91 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                             <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
 
                              <!-- Pick Your Ticket Card Starts -->
-                              <div 
+                             <div 
                               class="embed-ticket" 
                               *ngFor="let ticketDetail of ticketDetails; let index = index" 
-                              (click)="activateClass(ticketDetail)"                            
-                              [ngClass]="{'active': ticketDetail.active}"
+                              [ngClass]="{'active': ticketDetail.counter > 0 }"
                               >
                                 <div>
-                                  <div class="row center v-mobile left-mobile">
-                                    <div><h4 class="plan-title">{{ticketDetail.category_name}}</h4>
-                                      <p class="embed-paragraph small">{{ticketDetail.description}}.</p></div>
-                                      <div class="embed-pricing">
+                                <div class="row center v-mobile left-mobile">
+                                  <div><h4 class="plan-title">{{ticketDetail.category_name}}</h4>
+                                    <p class="embed-paragraph small">{{ticketDetail.description}}.</p></div>
+                                    <div class="embed-pricing">
+                                      <div 
+                                      class="embed-ticket-price active">
+                                      $ {{ ticketDetail.counterPrice || ticketDetail.price / 400}} 
+                                    </div>
+                                    
+                                      <div class="embed-ticket-quantity">
                                         <div 
-                                        class="embed-ticket-price active">
-                                        $ {{ ticketDetail.counterPrice || ticketDetail.price / 400}} 
-                                      </div>
-                                        <div class="embed-ticket-quantity">
-                                          <div 
-                                          class="embed-icon-wrap"
-                                          (click)="activateClassMinus(ticketDetail,index)"
-                                          >
-                                            <svg 
-                                            xmlns="http://www.w3.org/2000/svg" 
-                                            width="24" 
-                                            height="24" 
-                                            viewBox="0 0 24 24" 
-                                            fill="none" 
-                                            stroke="currentColor" 
-                                            stroke-width="2" 
-                                            stroke-linecap="round" 
-                                            stroke-linejoin="round" 
-                                            class="feather feather-minus embed-icon small" 
-                                            src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" 
-                                            alt="">
-                                            <line
-                                             x1="5" 
-                                             y1="12" 
-                                             x2="19" 
-                                             y2="12"
-                                             >
-                                            </line>
-                                            </svg>
-                                          </div>
-                                          <div class="embed-form-block w-form">
-                                            <form id="email-form" name="email-form" data-name="Email Form">
-                                              <input 
-                                              type="text" 
-                                              class="text-field w-input" 
-                                              maxlength="256" name="name-7" 
-                                              data-name="Name 7" 
-                                              placeholder="{{ticketDetail.counter || 1}}" 
-                                              id="name-7"
-                                              >
-                                            </form>
-                                            <div class="w-form-done">
-                                              <div>Thank you! Your submission has been received!</div>
-                                            </div>
-                                            <div class="w-form-fail">
-                                              <div>Oops! Something went wrong while submitting the form.
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div 
-                                          class="embed-icon-wrap"
-                                          (click)="activateClassAdd(ticketDetail,index)"
-                                          >
-                                            <svg 
-                                            xmlns="http://www.w3.org/2000/svg" 
-                                            width="24" 
-                                            height="24" 
-                                            viewBox="0 0 24 24" 
-                                            fill="none" 
-                                            stroke="currentColor" 
-                                            stroke-width="2" 
-                                            stroke-linecap="round" 
-                                            stroke-linejoin="round" 
-                                            class="feather feather-plus embed-icon small" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" 
-                                            alt=""
+                                        class="embed-icon-wrap"
+                                        (click)="activateClassMinus(ticketDetail,index)"
+                                        >
+                                          <svg 
+                                          xmlns="http://www.w3.org/2000/svg" 
+                                          width="24" 
+                                          height="24" 
+                                          viewBox="0 0 24 24" 
+                                          fill="none" 
+                                          stroke="currentColor" 
+                                          stroke-width="2" 
+                                          stroke-linecap="round" 
+                                          stroke-linejoin="round" 
+                                          class="feather feather-minus embed-icon small" 
+                                          src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" 
+                                          alt="">
+                                          <line
+                                           x1="5" 
+                                           y1="12" 
+                                           x2="19" 
+                                           y2="12"
+                                           >
+                                          </line>
+                                          </svg>
+                                        </div>
+                                        <div class="embed-form-block w-form">
+                                          <form id="email-form" name="email-form" data-name="Email Form">
+                                            <input 
+                                            type="text" 
+                                            class="text-field w-input" 
+                                            maxlength="256" name="name-7" 
+                                            data-name="Name 7" 
+                                            placeholder="{{ticketDetail.counter || 0}}" 
+                                            id="name-7"
                                             >
-                                              <line x1="12" y1="5" x2="12" y2="19"></line>
-                                              <line x1="5" y1="12" x2="19" y2="12"></line>
-                                            </svg>
+                                          </form>
+                                          <div class="w-form-done">
+                                            <div>Thank you! Your submission has been received!</div>
                                           </div>
+                                          <div class="w-form-fail">
+                                            <div>Oops! Something went wrong while submitting the form.
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div 
+                                        class="embed-icon-wrap"
+                                        (click)="activateClassAdd(ticketDetail,index)"
+                                        >
+                                          <svg 
+                                          xmlns="http://www.w3.org/2000/svg" 
+                                          width="24" 
+                                          height="24" 
+                                          viewBox="0 0 24 24" 
+                                          fill="none" 
+                                          stroke="currentColor" 
+                                          stroke-width="2" 
+                                          stroke-linecap="round" 
+                                          stroke-linejoin="round" 
+                                          class="feather feather-plus embed-icon small" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" 
+                                          alt=""
+                                          >
+                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                          </svg>
                                         </div>
                                       </div>
                                     </div>
+                                  </div>  
                                 </div>
                               </div>
                      <!-- Pick Your Ticket Card Ends -->
@@ -429,45 +429,54 @@ style="opacity: 1; transition: opacity 300ms ease 0s;">
 
 
 <!-- Your Order Side Bar Starts -->
-<div class="embed-order-card"><h4 class="embed-order-title">Your order</h4>
-  <div class="embed-order-list-items">
-    <div class="embed-order-row"><div>1</div>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x embed-icon small nudge-left nudge-right grey" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt="">
-      <line x1="18" y1="6" x2="6" y2="18"></line>
-      <line x1="6" y1="6" x2="18" y2="18"></line>
-    </svg>
-    <div class="embed-expand">Regular day pass</div>
-    <div class="embed-flex-0"><strong class="embed-bold">₦ 2,500</strong></div>
-  </div>
-  <div class="embed-order-row">
-    <div>2</div>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x embed-icon small nudge-left nudge-right grey" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt="">
-      <line x1="18" y1="6" x2="6" y2="18"></line>
-      <line x1="6" y1="6" x2="18" y2="18"></line>
-    </svg>
-    <div class="embed-expand">VIP</div>
-    <div class="embed-flex-0">
-      <strong class="embed-bold">₦ 70,000</strong></div>
+<ng-container *ngIf="ticketDetails ">
+  <div 
+  class="embed-order-card"
+  >
+    <h4 class="embed-order-title">Your order</h4>
+    <div class="embed-order-list-items">
+      <div 
+      class="embed-order-row" 
+      *ngFor="let ticketDetail of ticketDetails; let index = index" 
+      [style.display]="ticketDetail.counter > 0 ? 'flex' : 'none'"
+      >
+      
+        <div>{{index+1}}</div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x embed-icon small nudge-left nudge-right grey" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt="">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+      <div class="embed-expand">{{ticketDetail.category_name}}</div>
+      <div class="embed-flex-0"><strong class="embed-bold">$ {{ ticketDetail.counterPrice || ticketDetail.price}}</strong>
+      </div>
     </div>
-    <div class="embed-divider"></div>
-    <div class="embed-order-row small">
-      <div class="embed-expand">Subtotal</div>
-      <div class="embed-flex-0">₦ 72,500</div>
+    
+      <div class="embed-divider"></div>
+      <div class="embed-order-row small">
+        <div class="embed-expand">Subtotal</div>
+        <div class="embed-flex-0">$ {{  ticketDetails.price}}</div>
+      </div>
+      <div class="embed-order-row small">
+        <div class="embed-expand">Fees</div>
+        <div class="embed-flex-0">$ 150</div>
+      </div>
     </div>
-    <div class="embed-order-row small">
-      <div class="embed-expand">Fees</div>
-      <div class="embed-flex-0">₦ 150</div>
-    </div>
-  </div>
-  <div class="embed-order-meta-info">
-    <div class="embed-order-row big">
-      <div class="embed-expand">Total</div>
-      <div class="embed-flex-0">
-        <strong>₦ 72,650</strong>
+    <div class="embed-order-meta-info">
+      <div 
+      class="embed-order-row big"
+      
+      >
+        <div class="embed-expand">Total</div>
+        <ng-container>
+        <div class="embed-flex-0" *ngIf="add">
+          <strong>$ {{add / 400}}</strong>
+        </div>
+      </ng-container>
       </div>
     </div>
   </div>
-</div>
+  </ng-container>
+  
 <!-- Your Order Side Bar Ends -->
 </div>
 <div class="embed-footer">

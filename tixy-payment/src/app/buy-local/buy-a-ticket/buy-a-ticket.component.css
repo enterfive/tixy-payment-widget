@@ -5,3 +5,8 @@
     padding-bottom: 64px;
     padding-left: 32px;
 }
+
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { PaymentService } from '../../Service/payment.service';
 import {
@@ -8,9 +8,11 @@ import {
   Validators,
   FormControl,
   ValidationErrors,
-  ValidatorFn
+  ValidatorFn,
+  EmailValidator
 } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl, SafeUrl  } from '@angular/platform-browser';
+import { IfStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-buy-a-ticket',
@@ -31,6 +33,14 @@ export class BuyATicketComponent implements OnInit {
   routerSubscription: any;
   trustedDashboardUrl: SafeUrl;
   hidden;
+  hide= true
+  titleAlert: string = 'This field is required';
+  totalAdd;
+  totalMinus;
+  total;
+  add;
+  @ViewChildren('shownDiv') divs: QueryList<ElementRef>;
+
   // PaystackPop;
 
   constructor(
@@ -40,12 +50,10 @@ export class BuyATicketComponent implements OnInit {
     ) {
 
    }
-
- 
    userprofileform = new FormGroup({
-    firstname: new FormControl(''),
-    lastname: new FormControl(''),
-    email: new FormControl(''),
+    firstname: new FormControl('', Validators.required),
+    lastname: new FormControl('',  Validators.required),
+    email: new FormControl('',  Validators.required),
           attendees: new FormGroup({
             fname: new FormControl(''),
             lname: new FormControl(''),
@@ -58,38 +66,17 @@ export class BuyATicketComponent implements OnInit {
 
   onSubmit(){
     console.log(this.userprofileform.value)
-    
-    this.payment = true;
-    this.ticket = false;
-    this.information = false;
-    setTimeout(function(){ 
-    (<any>window).PaystackPop.setup({
-       key: 'pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5',
-       email: 'customer@email.com',
-       amount: 10000,
-       container: 'paystackEmbedContainer',
-       callback: function(response){
-        alert('successfully subscribed. transaction ref is ' + response.reference);
-      },
-    });
-  },3000);    
+   
+      this.payment = true;
+      this.ticket = false;
+      this.information = false;
+   
   }
-
- 
-
-
-
-  ngAfterInit(){
-    
-  }
-
-
 
   toggleTicket(){
     this.ticket = true
     this.information = false
     this.payment = false
-
   }
 
   
@@ -99,29 +86,55 @@ export class BuyATicketComponent implements OnInit {
     this.payment = false
   }
 
+
+  // ngAfterInit(){
+    
+  // }
   // togglePayment(){
   //   this.payment = true;
   //   this.ticket = false;
   //   this.information = false
   // }
 
+ngAfterViewChecked() {
+  let shown = document.getElementById('paystackEmbedContainer')
+  console.log(shown ? 'shown' : 'not shown');
+  // setTimeout( () => {
+  if(shown){
+    (<any>window).PaystackPop.setup({
+      key: 'pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5',
+      email: 'customer@email.com',
+      amount: 10000,
+      container: 'paystackEmbedContainer',
+      callback: function(response){
+       alert('successfully subscribed. transaction ref is ' + response.reference);
+     },
+     
+   });
+   
+  }
+// }, 2000)
+}
 
-  ngOnInit(): void {
-
-console.log('paystackpop', (<any>window).PaystackPop);
-
+  ngOnInit() {
     this.sendUrl()
     this.activatedRoute.params.subscribe(params => {
       this.eventId = params['id'];
      console.log(this.eventId);
    });
    this.getOpenEventTicket()
+
+
+   
   }
 
   getOpenEventTicket(){
     const eventId = this.eventId
     this.paymentService.getOpenTicketCategory(eventId).subscribe( (res:any) => {
       this.ticketDetails = res;
+      this.total = res.map(x => x.price)
+      this.add = res.map(tag => tag.price).reduce((a, b) => a + b, 0);
+      console.log("total", this.total, "addprice", this.add)
       console.log(this.ticketDetails)
     })
   }
@@ -144,9 +157,14 @@ console.log('paystackpop', (<any>window).PaystackPop);
      selectedTic.counter++;
      const newPrice = selectedTic.price * selectedTic.counter;
      selectedTic.counterPrice = newPrice
+     this.totalAdd = selectedTic.counterPrice * selectedTic.counter
+     console.log(this.totalAdd)
+    //  this.total = this.totalAdd + this.totalMinus
+     console.log("counter", selectedTic.counterPrice)
     } else {
       selectedTic.counter = 1 
     } 
+    console.log("The Ticket Cat Id", ticketDetail)
   }
 
   activateClassMinus(ticketDetail,index){
@@ -157,9 +175,14 @@ console.log('paystackpop', (<any>window).PaystackPop);
      selectedTic.counter--;
      const newPrice = selectedTic.price * selectedTic.counter;
      selectedTic.counterPrice = newPrice
+    this.totalMinus = selectedTic.counterPrice
+    console.log(this.totalMinus)
+
+    console.log("counter", selectedTic.counterPrice)
     } else {
      //  selectedTic.counter = 0
     }
+    console.log("The Ticket Cat Id", ticketDetail)
  }
 
 
