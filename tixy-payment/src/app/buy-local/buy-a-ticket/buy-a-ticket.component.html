@@ -19,6 +19,8 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 <script src="https://js.stripe.com/v3/"></script>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
 <!-- <link id="load-css-button.min.css" rel="stylesheet" type="text/css" href="https://paystack.com/public/css/button.min.css"> -->
 </head>
 
@@ -45,6 +47,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
             <!-- Entire Ticket Section Starts -->
   <ng-container *ngIf="ticket">
   <!-- Tab Component Start Starts -->
+  
   <div class="embed-tab-menu w-tab-menu">
     <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link w--current">
       <div>Tickets</div>
@@ -169,6 +172,8 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                                   </div>  
                                 </div>
                               </div>
+
+                              
                              <!-- Pick Your Ticket Card Ends -->
         </div>
   </div>
@@ -227,7 +232,14 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
             <div class="embed-form-section-sticky">
               <h4 class="embed-heading">Buyer information</h4>
               <label class="w-checkbox embed-checkbox">
-                <input type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="w-checkbox-input embed-checkbox-component">
+                <input 
+                type="checkbox" 
+                id="checkbox" 
+                name="checkbox" 
+                data-name="Checkbox" 
+                class="w-checkbox-input embed-checkbox-component"
+                (change)="checkValue($event)"
+                >
                 <span class="w-form-label">Copy buyer information to all tickets</span>
               </label>
             </div>
@@ -290,15 +302,24 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
         </div>
         
          <!-- Dynamic Ticket Category Starts -->
-         <div 
+         <div  
+         class="embed-form-row">
+         <!-- <div 
          formGroupName="attendees" 
          class="embed-form-row" 
-         *ngFor="let ticket of ticketDetails| keyvalue; let i = index">
+         *ngFor="let ticket of ticketDetails| keyvalue; let i = index"> -->
           <div class="embed-section-column">
             <div class="embed-form-section-sticky">
-              <h4 class="embed-heading"> {{i+1}}. {{ticket.value.category_name}}</h4>
+              <h4 class="embed-heading"> +1. Valentino</h4>
               <label class="w-checkbox embed-checkbox">
-                <input type="checkbox" id="checkbox-2" name="checkbox-2" data-name="Checkbox 2" checked="" class="w-checkbox-input embed-checkbox-component"><span class="w-form-label">Same as buyer information</span>
+                <input
+                type="checkbox" 
+                id="checkbox-2" 
+                name="checkbox-2" 
+                data-name="Checkbox 2" 
+                class="w-checkbox-input embed-checkbox-component"
+                (change)="checkValueOne($event)"
+                ><span class="w-form-label">Same as buyer information</span>
               </label>
             </div>
           </div>
@@ -340,6 +361,65 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
             </div>
           </div>
         </div>
+         <div 
+         class="embed-form-row">
+         <!-- <div 
+         formGroupName="attendees" 
+         class="embed-form-row" 
+         *ngFor="let ticket of ticketDetails| keyvalue; let i = index"> -->
+          <div class="embed-section-column">
+            <div class="embed-form-section-sticky">
+              <h4 class="embed-heading"> +2. Marlian Fest</h4>
+              <label class="w-checkbox embed-checkbox">
+                <input 
+                type="checkbox" 
+                id="checkbox-2" 
+                name="checkbox-2" 
+                data-name="Checkbox 2" 
+                class="w-checkbox-input embed-checkbox-component"
+                (change)="checkValueTwo($event)"
+                ><span class="w-form-label">Same as buyer information</span>
+              </label>
+            </div>
+          </div>
+          <div class="embed-expand">
+            <div>
+              <label for="name-6" class="embed-label">First name</label>
+              <input 
+              type="text" 
+              class="embed-input w-input" 
+              maxlength="256" 
+              name="name-5" 
+              data-name="Name 5" 
+              formControlName="fnameone"
+              >
+            </div>
+            <div>
+              <label for="name-6" class="embed-label">Last name</label>
+              <input 
+              type="text" 
+              class="embed-input w-input" 
+              maxlength="256" 
+              name="name-5" 
+              data-name="Name 5" 
+              id="name-5"
+              formControlName="lnameone"
+              >
+            </div>
+            <div>
+              <label for="name-6" class="embed-label">Email address</label>
+              <input 
+              type="email" 
+              class="embed-input w-input" 
+              maxlength="256" 
+              name="name-5" 
+              data-name="Name 5" 
+              id="name-5"
+              formControlName="mailone"
+              >
+            </div>
+          </div>
+        </div>
         <!-- Dynamic Ticket Category Ends -->
         
       <!-- </form> -->
@@ -375,7 +455,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
   </form>
   </ng-container>
 
-
+ 
 
 
  <!-- Entire Information Section Ends -->
@@ -399,7 +479,8 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
   <!-- Tab Component Start Ends -->
 
   
-  <div id="paystackEmbedContainer" (load)="loadPaystackModal()"></div>
+  <div id="paystackEmbedContainer"></div>
+
 
 
 

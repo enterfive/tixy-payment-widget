@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import { Component, OnInit, ViewChildren, QueryList, ElementRef, Output, EventEmitter } from '@angular/core';
+import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { PaymentService } from '../../Service/payment.service';
 import {
   FormBuilder,
@@ -39,38 +39,141 @@ export class BuyATicketComponent implements OnInit {
   totalMinus;
   total;
   add;
-  @ViewChildren('shownDiv') divs: QueryList<ElementRef>;
-
+  window;
+  mySubscription: any;
+  
+  @Output()
+  onClose: EventEmitter<boolean> = new EventEmitter();
   // PaystackPop;
 
   constructor(
     private activatedRoute: ActivatedRoute, 
     private paymentService: PaymentService,
-    private _sanitizer: DomSanitizer
-    ) {
+    private _sanitizer: DomSanitizer,
+    private router: Router
 
+    ) {
+      this.router.routeReuseStrategy.shouldReuseRoute = function () {
+        return false;
+      };
+      this.mySubscription = this.router.events.subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+          // Trick the Router into believing it's last link wasn't previously loaded
+          this.router.navigated = false;
+        }
+      });
+  
+      console.log(this.mySubscription)
    }
    userprofileform = new FormGroup({
     firstname: new FormControl('', Validators.required),
     lastname: new FormControl('',  Validators.required),
     email: new FormControl('',  Validators.required),
-          attendees: new FormGroup({
-            fname: new FormControl(''),
-            lname: new FormControl(''),
-            mail: new FormControl('')
-          })
+    fname: new FormControl('',  Validators.required),
+    lname: new FormControl('',  Validators.required),
+    mail: new FormControl('',  Validators.required),
+    fnameone: new FormControl('',  Validators.required),
+    lnameone: new FormControl('',  Validators.required),
+    mailone: new FormControl('',  Validators.required)
+         
   })
 
 
 
+  checkValue(e) {
+    if (e.target.checked) {
+      const firstname = this.userprofileform.controls["firstname"].value;
+      const lastname = this.userprofileform.controls["lastname"].value;
+      const email = this.userprofileform.controls["email"].value;
+      this.userprofileform.controls["fname"].setValue(firstname);
+      this.userprofileform.controls["lname"].setValue(lastname);
+      this.userprofileform.controls["mail"].setValue(email);
+      this.userprofileform.controls["fnameone"].setValue(firstname);
+      this.userprofileform.controls["lnameone"].setValue(lastname);
+      this.userprofileform.controls["mailone"].setValue(email);
+    }
+    else {
+      this.userprofileform.controls["fname"].setValue('');
+      this.userprofileform.controls["lname"].setValue('');
+      this.userprofileform.controls["mail"].setValue('');
+      this.userprofileform.controls["fnameone"].setValue('');
+      this.userprofileform.controls["lnameone"].setValue('');
+      this.userprofileform.controls["mailone"].setValue('');
+    }
+
+  }
+  checkValueOne(e) {
+    if (e.target.checked) {
+      const firstname = this.userprofileform.controls["firstname"].value;
+      const lastname = this.userprofileform.controls["lastname"].value;
+      const email = this.userprofileform.controls["email"].value;
+      this.userprofileform.controls["fname"].setValue(firstname);
+      this.userprofileform.controls["lname"].setValue(lastname);
+      this.userprofileform.controls["mail"].setValue(email);
+      
+    }
+    else {
+      this.userprofileform.controls["fnameone"].setValue('');
+      this.userprofileform.controls["lnameone"].setValue('');
+      this.userprofileform.controls["mailone"].setValue('');
+    }
+
+  }
+  checkValueTwo(e) {
+    if (e.target.checked) {
+      const firstname = this.userprofileform.controls["firstname"].value;
+      const lastname = this.userprofileform.controls["lastname"].value;
+      const email = this.userprofileform.controls["email"].value;
+      this.userprofileform.controls["fnameone"].setValue(firstname);
+      this.userprofileform.controls["lnameone"].setValue(lastname);
+      this.userprofileform.controls["mailone"].setValue(email);
+      
+    }
+    else {
+      this.userprofileform.controls["fnameone"].setValue('');
+      this.userprofileform.controls["lnameone"].setValue('');
+      this.userprofileform.controls["mailone"].setValue('');
+    }
+
+  }
+
+  ngAfterViewInit(){
+   
+  }
 
   onSubmit(){
-    console.log(this.userprofileform.value)
-   
+    console.log(this.userprofileform.value)  
       this.payment = true;
       this.ticket = false;
       this.information = false;
-   
+
+   setTimeout(() => {
+        let shown = document.getElementById('paystackEmbedContainer') as HTMLElement;
+        console.log(shown ? 'shown' : 'not shown');
+        this.window =   (<any>window).PaystackPop.setup({
+          key: 'pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5',
+          email: 'customer@email.com',
+          amount: 10000 * 200,
+          container: 'paystackEmbedContainer',
+          callback: function(response){
+           alert('successfully subscribed. transaction ref is ' + response.reference);
+           console.log(response.reference)
+         },
+         onClose: function(){
+          alert('window closed');
+      },
+       });
+    }, 2000);
+
+      
+  }
+  
+
+  ngOnDestroy(){
+    if (this.mySubscription) {
+      this.mySubscription.unsubscribe();
+    }
+    this.window().unsubscribe()
   }
 
   toggleTicket(){
@@ -81,9 +184,33 @@ export class BuyATicketComponent implements OnInit {
 
   
   toggleInformation(){
+
+    // (<any>window).PaystackPop.setup({
+     
+    //   key: 'pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5',
+    //       email: 'customer@email.com',
+    //       amount: 10000 * 200,
+    //       container: 'paystackEmbedContain',
+    //       callback: function(response){
+    //        alert('successfully subscribed. transaction ref is ' + response.reference);
+    //        console.log(response.reference)
+    //      },
+    //      onClose: function(){
+    //       alert('window closed');
+    //   },
+      
+      
+    // });
     this.information = true
     this.ticket = false
     this.payment = false
+
+
+    // let id = this.eventId
+    // let url = `http://localhost:4200/buy-a-local-ticket/${id}`
+    // this.router.navigateByUrl(url);
+    
+   
   }
 
   loadPaystackModal(){
@@ -100,27 +227,25 @@ export class BuyATicketComponent implements OnInit {
   //   this.information = false
   // }
 
-loadPayStackModal() {
-  let shown = document.getElementById('paystackEmbedContainer')
-  console.log(shown ? 'shown' : 'not shown');
-  // setTimeout( () => {
-  // if(shown){
-    (<any>window).PaystackPop.setup({
-      key: 'pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5',
-      email: 'customer@email.com',
-      amount: 10000,
-      container: 'paystackEmbedContainer',
-      callback: function(response){
-       alert('successfully subscribed. transaction ref is ' + response.reference);
-     },
+
+// loadPayStackModal() {
+//   let shown = document.getElementById('paystackEmbedContainer')
+//   console.log(shown ? 'shown' : 'not shown');
+//     (<any>window).PaystackPop.setup({
+//       key: 'pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5',
+//       email: 'customer@email.com',
+//       amount: 10000,
+//       container: 'paystackEmbedContainer',
+//       callback: function(response){
+//        alert('successfully subscribed. transaction ref is ' + response.reference);
+//      },
      
-   });
-   
-  // }
-// }, 2000)
-}
+//    });
+//    }
 
   ngOnInit() {
+
+    
     this.sendUrl()
     this.activatedRoute.params.subscribe(params => {
       this.eventId = params['id'];
@@ -128,9 +253,11 @@ loadPayStackModal() {
    });
    this.getOpenEventTicket()
 
-
    
-  }
+}
+
+
+
 
   getOpenEventTicket(){
     const eventId = this.eventId
@@ -142,6 +269,10 @@ loadPayStackModal() {
       console.log(this.ticketDetails)
     })
   }
+
+
+
+
 
   activateClass(ticketDetail){
     ticketDetail.active = !ticketDetail.active;
@@ -191,11 +322,11 @@ loadPayStackModal() {
 
 
  sendUrl() {
-  // this.showIframe = true
-  // let playerUrl = `https://paystack.com/assets/payment/production/inline.html?id=paystack7jWUC&amp;key=pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5&amp;email=customer%40email.com&amp;amount=10000&amp;currency=NGN&amp;container=paystackEmbedContainer&amp;metadata=%7B%22referrer%22%3A%22https%3A%2F%2Ftixy-2-0.webflow.io%2Fbuy-a-ticket-alt%22%7D&amp;mode=popup&amp;hasTLSFallback=true` // try it first, if it doesn't work use the sanitized URL
-  // this.trustedDashboardUrl = this._sanitizer.bypassSecurityTrustResourceUrl(playerUrl);
-  // this.iframeURL = this.trustedDashboardUrl;
-  // console.log( this.iframeURL)
+  this.showIframe = true
+  let playerUrl = `https://paystack.com/assets/payment/production/inline.html?id=paystack7jWUC&amp;key=pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5&amp;email=customer%40email.com&amp;amount=10000&amp;currency=NGN&amp;container=paystackEmbedContainer&amp;metadata=%7B%22referrer%22%3A%22https%3A%2F%2Ftixy-2-0.webflow.io%2Fbuy-a-ticket-alt%22%7D&amp;mode=popup&amp;hasTLSFallback=true` // try it first, if it doesn't work use the sanitized URL
+  this.trustedDashboardUrl = this._sanitizer.bypassSecurityTrustResourceUrl(playerUrl);
+  this.iframeURL = this.trustedDashboardUrl;
+  console.log( this.iframeURL)
 }
 
 }
