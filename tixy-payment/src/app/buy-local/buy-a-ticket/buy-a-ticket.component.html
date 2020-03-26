@@ -225,7 +225,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
   class="pan w-tab-pane w--tab-active" 
   style="opacity: 1; transition: opacity 300ms ease 0s;">
     <h3 class="heading-6">Fill out buyer and ticket information</h3>
-    <div class="w-form">
+    <div class="w-form" style="padding-bottom: 64px!important;">
       <!-- <form class="embed-form"> -->
         <div class="embed-form-row">
           <div class="embed-section-column">
@@ -310,7 +310,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
          *ngFor="let ticket of ticketDetails| keyvalue; let i = index"> -->
           <div class="embed-section-column">
             <div class="embed-form-section-sticky">
-              <h4 class="embed-heading"> +1. Valentino</h4>
+              <h4 class="embed-heading"> 1. Valentino</h4>
               <label class="w-checkbox embed-checkbox">
                 <input
                 type="checkbox" 
@@ -369,7 +369,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
          *ngFor="let ticket of ticketDetails| keyvalue; let i = index"> -->
           <div class="embed-section-column">
             <div class="embed-form-section-sticky">
-              <h4 class="embed-heading"> +2. Marlian Fest</h4>
+              <h4 class="embed-heading"> 2. Marlian Fest</h4>
               <label class="w-checkbox embed-checkbox">
                 <input 
                 type="checkbox" 
@@ -574,8 +574,8 @@ class="embed-order-card"
     >
       <div class="embed-expand">Total</div>
       <ng-container>
-      <div class="embed-flex-0" *ngIf="add">
-        <strong>₦ {{add}}</strong>
+      <div class="embed-flex-0" *ngIf="alltotal">
+        <strong>₦ {{alltotal}}</strong>
       </div>
     </ng-container>
     </div>
@@ -586,8 +586,8 @@ class="embed-order-card"
 <!-- Your Order Side Bar Ends -->
 </div>
 <div class="embed-footer">
-  <a href="#" class="embed-link">Privacy Policy</a>
-  <a href="#" class="row shrink center w-inline-block">
+  <a class="embed-link">Privacy Policy</a>
+  <a class="row shrink center w-inline-block">
     <div class="embed-text">Powered by Tixy</div>
     <img src="https://assets.website-files.com/5c48989a8f89e1684ff6c0d6/5e1751f8f80710004765be08_tixyblk.svg" alt="" class="icon small nudge-right">
   </a>

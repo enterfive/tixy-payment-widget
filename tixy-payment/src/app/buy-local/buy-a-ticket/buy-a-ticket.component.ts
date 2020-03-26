@@ -12,8 +12,7 @@ import {
   EmailValidator
 } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl, SafeUrl  } from '@angular/platform-browser';
-import { IfStmt } from '@angular/compiler';
-
+import _ from 'Lodash';
 @Component({
   selector: 'app-buy-a-ticket',
   templateUrl: './buy-a-ticket.component.html',
@@ -40,8 +39,9 @@ export class BuyATicketComponent implements OnInit {
   total;
   add;
   window;
+  alltotal;
   mySubscription: any;
-  
+  selectedTic;
   @Output()
   onClose: EventEmitter<boolean> = new EventEmitter();
   // PaystackPop;
@@ -53,17 +53,6 @@ export class BuyATicketComponent implements OnInit {
     private router: Router
 
     ) {
-      this.router.routeReuseStrategy.shouldReuseRoute = function () {
-        return false;
-      };
-      this.mySubscription = this.router.events.subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-          // Trick the Router into believing it's last link wasn't previously loaded
-          this.router.navigated = false;
-        }
-      });
-  
-      console.log(this.mySubscription)
    }
    userprofileform = new FormGroup({
     firstname: new FormControl('', Validators.required),
@@ -150,7 +139,7 @@ export class BuyATicketComponent implements OnInit {
    setTimeout(() => {
         let shown = document.getElementById('paystackEmbedContainer') as HTMLElement;
         console.log(shown ? 'shown' : 'not shown');
-        this.window =   (<any>window).PaystackPop.setup({
+          (<any>window).PaystackPop.setup({
           key: 'pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5',
           email: 'customer@email.com',
           amount: 10000 * 200,
@@ -164,17 +153,10 @@ export class BuyATicketComponent implements OnInit {
       },
        });
     }, 2000);
-
+console.log( (<any>window).PaystackPop)
       
   }
   
-
-  ngOnDestroy(){
-    if (this.mySubscription) {
-      this.mySubscription.unsubscribe();
-    }
-    this.window().unsubscribe()
-  }
 
   toggleTicket(){
     this.ticket = true
@@ -184,94 +166,30 @@ export class BuyATicketComponent implements OnInit {
 
   
   toggleInformation(){
-
-    // (<any>window).PaystackPop.setup({
-     
-    //   key: 'pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5',
-    //       email: 'customer@email.com',
-    //       amount: 10000 * 200,
-    //       container: 'paystackEmbedContain',
-    //       callback: function(response){
-    //        alert('successfully subscribed. transaction ref is ' + response.reference);
-    //        console.log(response.reference)
-    //      },
-    //      onClose: function(){
-    //       alert('window closed');
-    //   },
-      
-      
-    // });
+    (<any>window).PaystackPop.isInitialized = false
     this.information = true
     this.ticket = false
     this.payment = false
-
-
-    // let id = this.eventId
-    // let url = `http://localhost:4200/buy-a-local-ticket/${id}`
-    // this.router.navigateByUrl(url);
-    
-   
   }
 
-  loadPaystackModal(){
-    console.log('*** loading paystack modal...');
-  }
-
-
-  // ngAfterInit(){
-    
-  // }
-  // togglePayment(){
-  //   this.payment = true;
-  //   this.ticket = false;
-  //   this.information = false
-  // }
-
-
-// loadPayStackModal() {
-//   let shown = document.getElementById('paystackEmbedContainer')
-//   console.log(shown ? 'shown' : 'not shown');
-//     (<any>window).PaystackPop.setup({
-//       key: 'pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5',
-//       email: 'customer@email.com',
-//       amount: 10000,
-//       container: 'paystackEmbedContainer',
-//       callback: function(response){
-//        alert('successfully subscribed. transaction ref is ' + response.reference);
-//      },
-     
-//    });
-//    }
-
-  ngOnInit() {
-
-    
-    this.sendUrl()
+  ngOnInit() {  
     this.activatedRoute.params.subscribe(params => {
       this.eventId = params['id'];
      console.log(this.eventId);
    });
    this.getOpenEventTicket()
-
-   
 }
-
-
-
 
   getOpenEventTicket(){
     const eventId = this.eventId
     this.paymentService.getOpenTicketCategory(eventId).subscribe( (res:any) => {
       this.ticketDetails = res;
       this.total = res.map(x => x.price)
-      this.add = res.map(tag => tag.price).reduce((a, b) => a + b, 0);
+      this.add = res.map(tag => tag.counterPrice).reduce((a, b) => a + b, 0);
       console.log("total", this.total, "addprice", this.add)
       console.log(this.ticketDetails)
     })
   }
-
-
-
 
 
   activateClass(ticketDetail){
@@ -287,17 +205,19 @@ export class BuyATicketComponent implements OnInit {
   activateClassAdd(ticketDetail,index){
     ticketDetail.active = false;
     ticketDetail.active = !ticketDetail.active;
-    const selectedTic = this.ticketDetails[index]
-    if(selectedTic.counter) { 
-     selectedTic.counter++;
-     const newPrice = selectedTic.price * selectedTic.counter;
-     selectedTic.counterPrice = newPrice
-     this.totalAdd = selectedTic.counterPrice * selectedTic.counter
+     this.selectedTic = this.ticketDetails[index]
+    if(this.selectedTic.counter) { 
+     this.selectedTic.counter++;
+     const newPrice = this.selectedTic.price * this.selectedTic.counter;
+     this.selectedTic.counterPrice = newPrice
+     this.totalAdd = this.selectedTic.counterPrice * this.selectedTic.counter
      console.log(this.totalAdd)
     //  this.total = this.totalAdd + this.totalMinus
-     console.log("counter", selectedTic.counterPrice)
+     console.log("counter the price", this.selectedTic.counterPrice)
+    this.alltotal = Object.values(this.ticketDetails).map((x:any) => x.counterPrice).reduce((a, b) => a + b, 0)
+    console.log("tic det",this.alltotal )
     } else {
-      selectedTic.counter = 1 
+      this.selectedTic.counter = 1 
     } 
     console.log("The Ticket Cat Id", ticketDetail)
   }
@@ -312,7 +232,8 @@ export class BuyATicketComponent implements OnInit {
      selectedTic.counterPrice = newPrice
     this.totalMinus = selectedTic.counterPrice
     console.log(this.totalMinus)
-
+    this.alltotal = Object.values(this.ticketDetails).map((x:any) => x.counterPrice).reduce((a, b) => b - a, 0)
+    console.log("tic det",this.alltotal )
     console.log("counter", selectedTic.counterPrice)
     } else {
      //  selectedTic.counter = 0
@@ -321,13 +242,13 @@ export class BuyATicketComponent implements OnInit {
  }
 
 
- sendUrl() {
-  this.showIframe = true
-  let playerUrl = `https://paystack.com/assets/payment/production/inline.html?id=paystack7jWUC&amp;key=pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5&amp;email=customer%40email.com&amp;amount=10000&amp;currency=NGN&amp;container=paystackEmbedContainer&amp;metadata=%7B%22referrer%22%3A%22https%3A%2F%2Ftixy-2-0.webflow.io%2Fbuy-a-ticket-alt%22%7D&amp;mode=popup&amp;hasTLSFallback=true` // try it first, if it doesn't work use the sanitized URL
-  this.trustedDashboardUrl = this._sanitizer.bypassSecurityTrustResourceUrl(playerUrl);
-  this.iframeURL = this.trustedDashboardUrl;
-  console.log( this.iframeURL)
-}
+//  sendUrl() {
+//   this.showIframe = true
+//   let playerUrl = `https://paystack.com/assets/payment/production/inline.html?id=paystack7jWUC&amp;key=pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5&amp;email=customer%40email.com&amp;amount=10000&amp;currency=NGN&amp;container=paystackEmbedContainer&amp;metadata=%7B%22referrer%22%3A%22https%3A%2F%2Ftixy-2-0.webflow.io%2Fbuy-a-ticket-alt%22%7D&amp;mode=popup&amp;hasTLSFallback=true` // try it first, if it doesn't work use the sanitized URL
+//   this.trustedDashboardUrl = this._sanitizer.bypassSecurityTrustResourceUrl(playerUrl);
+//   this.iframeURL = this.trustedDashboardUrl;
+//   console.log( this.iframeURL)
+// }
 
 }
 
