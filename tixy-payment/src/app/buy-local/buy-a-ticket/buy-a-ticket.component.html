@@ -225,9 +225,9 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
   class="pan w-tab-pane w--tab-active" 
   style="opacity: 1; transition: opacity 300ms ease 0s;">
     <h3 class="heading-6">Fill out buyer and ticket information</h3>
-    <div class="w-form">
+    <div class="w-form" style="padding-bottom: 64px!important;">
       <!-- <form class="embed-form"> -->
-        <div class="embed-form-row">
+        <div formGroupName="buyer" class="embed-form-row">
           <div class="embed-section-column">
             <div class="embed-form-section-sticky">
               <h4 class="embed-heading">Buyer information</h4>
@@ -238,7 +238,6 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                 name="checkbox" 
                 data-name="Checkbox" 
                 class="w-checkbox-input embed-checkbox-component"
-                (change)="checkValue($event)"
                 >
                 <span class="w-form-label">Copy buyer information to all tickets</span>
               </label>
@@ -254,14 +253,14 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
               name="name-5" 
               data-name="Name 5" 
               id="name-5"
-              formControlName="firstname"
+              formControlName="first_name"
               >
               </div>
-              <div 
+              <!-- <div 
               class="help-text error" 
               style="color:red;" 
               *ngIf="!userprofileform.controls['firstname'].valid &&userprofileform.controls['firstname'].touched">{{ titleAlert }}
-            </div>
+            </div> -->
 
             <div>
               <label for="name-6" class="embed-label">Last name</label>
@@ -272,14 +271,14 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
               name="name-5" 
               data-name="Name 5" 
               id="name-5"
-              formControlName="lastname"
+              formControlName="last_name"
               >
             </div>
-            <div 
+            <!-- <div 
               class="help-text error" 
               style="color:red;" 
               *ngIf="!userprofileform.controls['lastname'].valid &&userprofileform.controls['lastname'].touched">{{ titleAlert }}
-            </div>
+            </div> -->
             <div>
               <label for="name-6" class="embed-label">Email address</label>
               <input 
@@ -292,25 +291,28 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
               formControlName="email"
               >
             </div>
-            <div 
+            <!-- <div 
         class="help-text error" 
         style="color:red;" 
         *ngIf="!userprofileform.controls['email'].valid &&userprofileform.controls['email'].touched">{{ titleAlert }}
-      </div>
+      </div> -->
           </div>
           
         </div>
         
          <!-- Dynamic Ticket Category Starts -->
+         <div formArrayName="attendees">
+         <ng-container
+         *ngFor="let ticket of ticketDetails; let i = index"
+         [formGroupName]="i"
+         >
          <div  
-         class="embed-form-row">
-         <!-- <div 
-         formGroupName="attendees" 
-         class="embed-form-row" 
-         *ngFor="let ticket of ticketDetails| keyvalue; let i = index"> -->
+         class="embed-form-row"
+         >
+         
           <div class="embed-section-column">
             <div class="embed-form-section-sticky">
-              <h4 class="embed-heading"> +1. Valentino</h4>
+              <h4 class="embed-heading"> {{i + 1}}. {{ticket.category_name}}</h4>
               <label class="w-checkbox embed-checkbox">
                 <input
                 type="checkbox" 
@@ -318,7 +320,6 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                 name="checkbox-2" 
                 data-name="Checkbox 2" 
                 class="w-checkbox-input embed-checkbox-component"
-                (change)="checkValueOne($event)"
                 ><span class="w-form-label">Same as buyer information</span>
               </label>
             </div>
@@ -332,7 +333,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
               maxlength="256" 
               name="name-5" 
               data-name="Name 5" 
-              formControlName="fname"
+              formControlName="first_name"
               >
             </div>
             <div>
@@ -344,7 +345,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
               name="name-5" 
               data-name="Name 5" 
               id="name-5"
-              formControlName="lname"
+              formControlName="last_name"
               >
             </div>
             <div>
@@ -356,84 +357,15 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
               name="name-5" 
               data-name="Name 5" 
               id="name-5"
-              formControlName="mail"
+              formControlName="email"
               >
             </div>
           </div>
-        </div>
-         <div 
-         class="embed-form-row">
-         <!-- <div 
-         formGroupName="attendees" 
-         class="embed-form-row" 
-         *ngFor="let ticket of ticketDetails| keyvalue; let i = index"> -->
-          <div class="embed-section-column">
-            <div class="embed-form-section-sticky">
-              <h4 class="embed-heading"> +2. Marlian Fest</h4>
-              <label class="w-checkbox embed-checkbox">
-                <input 
-                type="checkbox" 
-                id="checkbox-2" 
-                name="checkbox-2" 
-                data-name="Checkbox 2" 
-                class="w-checkbox-input embed-checkbox-component"
-                (change)="checkValueTwo($event)"
-                ><span class="w-form-label">Same as buyer information</span>
-              </label>
-            </div>
-          </div>
-          <div class="embed-expand">
-            <div>
-              <label for="name-6" class="embed-label">First name</label>
-              <input 
-              type="text" 
-              class="embed-input w-input" 
-              maxlength="256" 
-              name="name-5" 
-              data-name="Name 5" 
-              formControlName="fnameone"
-              >
-            </div>
-            <div>
-              <label for="name-6" class="embed-label">Last name</label>
-              <input 
-              type="text" 
-              class="embed-input w-input" 
-              maxlength="256" 
-              name="name-5" 
-              data-name="Name 5" 
-              id="name-5"
-              formControlName="lnameone"
-              >
-            </div>
-            <div>
-              <label for="name-6" class="embed-label">Email address</label>
-              <input 
-              type="email" 
-              class="embed-input w-input" 
-              maxlength="256" 
-              name="name-5" 
-              data-name="Name 5" 
-              id="name-5"
-              formControlName="mailone"
-              >
-            </div>
-          </div>
-        </div>
-        <!-- Dynamic Ticket Category Ends -->
-        
-      <!-- </form> -->
-  
-     
-  
-      <div class="w-form-done">
-        <div>Thank you! Your submission has been received!</div>
-      </div>
-      <div class="w-form-fail">
-        <div>Oops! Something went wrong while submitting the form.</div>
-      </div>
-      
+        </div>   
+      </ng-container>
     </div>
+        <!-- Dynamic Ticket Category Ends -->
+    </div>  
   </div>
   
   
@@ -574,8 +506,8 @@ class="embed-order-card"
     >
       <div class="embed-expand">Total</div>
       <ng-container>
-      <div class="embed-flex-0" *ngIf="add">
-        <strong>₦ {{add}}</strong>
+      <div class="embed-flex-0" *ngIf="alltotal">
+        <strong>₦ {{alltotal}}</strong>
       </div>
     </ng-container>
     </div>
@@ -586,8 +518,8 @@ class="embed-order-card"
 <!-- Your Order Side Bar Ends -->
 </div>
 <div class="embed-footer">
-  <a href="#" class="embed-link">Privacy Policy</a>
-  <a href="#" class="row shrink center w-inline-block">
+  <a class="embed-link">Privacy Policy</a>
+  <a class="row shrink center w-inline-block">
     <div class="embed-text">Powered by Tixy</div>
     <img src="https://assets.website-files.com/5c48989a8f89e1684ff6c0d6/5e1751f8f80710004765be08_tixyblk.svg" alt="" class="icon small nudge-right">
   </a>
