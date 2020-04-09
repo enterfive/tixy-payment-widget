@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastrModule } from 'ng6-toastr-notifications';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +14,7 @@ import { BuyTicketsComponent } from './buy-international/buy-tickets/buy-tickets
 import { PaymentService } from './Service/payment.service';
 import { FrameComponent } from './frame/frame.component';
 import { PaymentComponent } from './buy-local/payment/payment.component';
+
 
 @NgModule({
   declarations: [
@@ -24,10 +27,12 @@ import { PaymentComponent } from './buy-local/payment/payment.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastrModule.forRoot()
   ],
   providers: [PaymentService],
   schemas: [

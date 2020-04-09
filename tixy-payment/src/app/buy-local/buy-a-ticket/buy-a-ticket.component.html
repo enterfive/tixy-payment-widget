@@ -256,11 +256,11 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
               formControlName="first_name"
               >
               </div>
-              <!-- <div 
+              <div 
               class="help-text error" 
               style="color:red;" 
-              *ngIf="!userprofileform.controls['firstname'].valid &&userprofileform.controls['firstname'].touched">{{ titleAlert }}
-            </div> -->
+              *ngIf="!userprofileform.get('buyer.first_name').valid && userprofileform.get('buyer.first_name').touched">{{ titleAlert }}
+            </div>
 
             <div>
               <label for="name-6" class="embed-label">Last name</label>
@@ -274,15 +274,15 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
               formControlName="last_name"
               >
             </div>
-            <!-- <div 
+            <div 
               class="help-text error" 
               style="color:red;" 
-              *ngIf="!userprofileform.controls['lastname'].valid &&userprofileform.controls['lastname'].touched">{{ titleAlert }}
-            </div> -->
+              *ngIf="!userprofileform.get('buyer.last_name').valid && userprofileform.get('buyer.last_name').touched">{{ titleAlert }}
+            </div>
             <div>
               <label for="name-6" class="embed-label">Email address</label>
               <input 
-              type="text" 
+              type="email" 
               class="embed-input w-input" 
               maxlength="256" 
               name="name-5" 
@@ -291,11 +291,11 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
               formControlName="email"
               >
             </div>
-            <!-- <div 
-        class="help-text error" 
-        style="color:red;" 
-        *ngIf="!userprofileform.controls['email'].valid &&userprofileform.controls['email'].touched">{{ titleAlert }}
-      </div> -->
+            <div 
+            class="help-text error" 
+            style="color:red;" 
+            *ngIf="!userprofileform.get('buyer.email').valid && userprofileform.get('buyer.email').touched">{{ titleAlert }}
+          </div>
           </div>
           
         </div>
@@ -336,6 +336,13 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
               formControlName="first_name"
               >
             </div>
+
+            <div 
+            class="help-text error" 
+            style="color:red;" 
+            *ngIf="validateArray('first_name').controls[0].valid && validateArray('first_name').controls[0].touched">{{ titleAlert }}
+          </div>
+
             <div>
               <label for="name-6" class="embed-label">Last name</label>
               <input 

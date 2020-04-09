@@ -12,8 +12,7 @@ import {
   EmailValidator
 } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl, SafeUrl  } from '@angular/platform-browser';
-import _ from 'Lodash';
-import { Key } from 'protractor';
+import { ToastrManager } from 'ng6-toastr-notifications';
 @Component({
   selector: 'app-buy-a-ticket',
   templateUrl: './buy-a-ticket.component.html',
@@ -50,6 +49,7 @@ export class BuyATicketComponent implements OnInit {
   userprofileform: FormGroup
   ticketcategory_id;
   obj;
+  purchaseCallback;
   // PaystackPop;
 
   ngOnInit() {  
@@ -66,7 +66,9 @@ export class BuyATicketComponent implements OnInit {
     private paymentService: PaymentService,
     private _sanitizer: DomSanitizer,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toaster: ToastrManager
+    
     ) {
       this.userprofileform = this.fb.group({
         buyer: this.fb.group({
@@ -78,11 +80,9 @@ export class BuyATicketComponent implements OnInit {
          fees: ['100', Validators.required]
          }),
          attendees: this.fb.array([
+           
          ])
-       })
-      //  setTimeout( () => {
-      //   this.attendeesControl()
-      //  }, 7000)
+       })    
    }
   
   
@@ -91,9 +91,9 @@ export class BuyATicketComponent implements OnInit {
     Object.keys(this.ticketDetails).forEach((i) => {
      controlArray.push(
        this.fb.group({
-        first_name: new FormControl({ value: '', disabled: false }),
-        last_name: new FormControl({ value: '', disabled: false }),
-        email: new FormControl({ value: '', disabled: false }),
+        first_name: new FormControl({ value: '', disabled: false }, Validators.required),
+        last_name: new FormControl({ value: '', disabled: false }, Validators.required),
+        email: new FormControl({ value: '', disabled: false }, Validators.required),
         ticket_category_id: this.ticketDetails[i].ticket_category_id
       })
      )
@@ -102,7 +102,16 @@ export class BuyATicketComponent implements OnInit {
  }  
 
  get f() {
-  return this.userprofileform.controls;
+  const ff =  this.userprofileform.controls;
+  console.log(ff)
+  return ff
+ 
+}
+
+validateArray(i){
+  const controlArray = this.userprofileform.get('attendees') as FormArray;
+  console.log(controlArray.controls[0].invalid && controlArray.controls[0].touched)
+  return controlArray
 }
   
 
@@ -165,29 +174,29 @@ export class BuyATicketComponent implements OnInit {
 
 
   onSubmit(){
-    //Information Tab Form Function
+  //Information Tab Form Function
     this.submitInformationForm()
-// Paystack Modal Starts
+ // Paystack Modal Starts
 setTimeout(() => {
- 
   let shown = document.getElementById('paystackEmbedContainer') as HTMLElement;
   console.log(shown ? 'shown' : 'not shown');
     (<any>window).PaystackPop.setup({
-    key: 'pk_test_0dcfa780bc08adca265572bcfa91019ffa855390',
+    key: 'pk_test_3adb59c58af1c11a841fd7fe21a27508878babd1',
     email: 'customer@email.com',
     amount: this.alltotal * 100,
     container: 'paystackEmbedContainer',
-    callback: function(response){
+    callback: ( (response) => {
       console.log(response.reference)
-     alert('successfully subscribed. transaction ref is ' + response.reference);
-     console.log(response.reference)
-    
-   },
+      localStorage.setItem('transaction_ref', response.reference)
+    //  alert('successfully subscribed. transaction ref is ' + response.reference);
+    this.ticketPurchase()
+   }),
    onClose: function(){
+     console.log("windows closed")
     alert('window closed');
-},
- });
- 
+  },
+
+});
 
 }, 2000);
 console.log( (<any>window).PaystackPop)
@@ -212,9 +221,8 @@ console.log( (<any>window).PaystackPop)
     localStorage.setItem('order_id', orderRef)
    
  })
-
   }
-  
+
 
   toggleTicket(){
     this.ticket = true
@@ -244,6 +252,23 @@ console.log( (<any>window).PaystackPop)
 
     })
   }
+
+
+  ticketPurchase() {
+        const orderId= localStorage.getItem('order_id');
+        const transaction_ref = localStorage.getItem('transaction_ref')
+        const paymentPlatform = "paystack"
+    
+        this.paymentService.ticketPurchaseCallback(orderId, transaction_ref, paymentPlatform).subscribe((data: any) => {
+          console.log(data)
+          if(data.error){
+            this.toaster.errorToastr(data.text, null, { toastTimeout: 7000 });
+          } else {  
+            this.toaster.successToastr(data.text, null, { toastTimeout: 7000 });
+          }
+
+        })
+      }
 
 
   activateClass(ticketDetail){
