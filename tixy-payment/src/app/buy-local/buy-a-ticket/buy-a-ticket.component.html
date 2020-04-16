@@ -238,6 +238,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                 name="checkbox" 
                 data-name="Checkbox" 
                 class="w-checkbox-input embed-checkbox-component"
+                (change)="checkValueAllTickets($event)"
                 >
                 <span class="w-form-label">Copy buyer information to all tickets</span>
               </label>
@@ -294,7 +295,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
             <div 
             class="help-text error" 
             style="color:red;" 
-            *ngIf="!userprofileform.get('buyer.email').valid && userprofileform.get('buyer.email').touched">{{ titleAlert }}
+            *ngIf="!userprofileform.get('buyer.email').valid && userprofileform.get('buyer.email').touched">{{ emailAlert }}
           </div>
           </div>
           
@@ -320,6 +321,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                 name="checkbox-2" 
                 data-name="Checkbox 2" 
                 class="w-checkbox-input embed-checkbox-component"
+                (change)="checkValueOfOneTicket($event, i)"
                 ><span class="w-form-label">Same as buyer information</span>
               </label>
             </div>
@@ -340,7 +342,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
             <div 
             class="help-text error" 
             style="color:red;" 
-            *ngIf="validateArray('first_name').controls[0].valid && validateArray('first_name').controls[0].touched">{{ titleAlert }}
+            *ngIf="!controlArray.controls[i].get('first_name') && controlArray.controls[i].get('first_name').touched ">{{ titleAlert }}
           </div>
 
             <div>
@@ -355,6 +357,12 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
               formControlName="last_name"
               >
             </div>
+            <div 
+            class="help-text error" 
+            style="color:red;" 
+            *ngIf="!controlArray.controls[i].get('last_name').invalid && controlArray.controls[i].get('last_name').touched ">{{ titleAlert }}
+          </div>
+
             <div>
               <label for="name-6" class="embed-label">Email address</label>
               <input 
@@ -367,6 +375,12 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
               formControlName="email"
               >
             </div>
+            <div 
+            class="help-text error" 
+            style="color:red;" 
+            *ngIf="!controlArray.controls[i].get('email').invalid && controlArray.controls[i].get('email').touched ">{{ emailAlert }}
+          </div>
+
           </div>
         </div>   
       </ng-container>
@@ -438,41 +452,8 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 </div>
 
  <!-- Entire Payment Section Ends -->
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
-
-
-
-
-
 <!-- Your Order Side Bar Starts -->
 <ng-container *ngIf="ticketDetails ">
 <div 
@@ -513,8 +494,8 @@ class="embed-order-card"
     >
       <div class="embed-expand">Total</div>
       <ng-container>
-      <div class="embed-flex-0" *ngIf="alltotal">
-        <strong>₦ {{alltotal}}</strong>
+      <div class="embed-flex-0" *ngIf="total">
+        <strong>₦ {{getTotal}}</strong>
       </div>
     </ng-container>
     </div>

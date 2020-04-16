@@ -34,6 +34,8 @@ export class BuyATicketComponent implements OnInit {
   hidden;
   hide= true
   titleAlert: string = 'This field is required';
+  allAlert: string = 'All fields Are required with a valid email address';
+  emailAlert: string = 'Please, Enter A Valid E-mail Address';
   totalAdd;
   totalMinus;
   total;
@@ -49,6 +51,7 @@ export class BuyATicketComponent implements OnInit {
   userprofileform: FormGroup
   ticketcategory_id;
   obj;
+  controlArray
   purchaseCallback;
   // PaystackPop;
 
@@ -74,10 +77,13 @@ export class BuyATicketComponent implements OnInit {
         buyer: this.fb.group({
          first_name: ['', Validators.required],
          last_name: ['', Validators.required],
-         email:['', Validators.required],
-         amount: ['21000', Validators.required],
-         number_of_tickets : ['3', Validators.required],
-         fees: ['100', Validators.required]
+         email:['', Validators.compose([
+          Validators.required,
+          Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+        ])],
+         amount:new FormControl({ value: this.alltotal, disabled: false }),
+         number_of_tickets : ['3'],
+         fees: ['100']
          }),
          attendees: this.fb.array([
            
@@ -87,25 +93,29 @@ export class BuyATicketComponent implements OnInit {
   
   
    attendeesControl() {
-    const controlArray = this.userprofileform.get('attendees') as FormArray;
+     this.controlArray = this.userprofileform.get('attendees') as FormArray;
     Object.keys(this.ticketDetails).forEach((i) => {
-     controlArray.push(
+     this.controlArray.push(
        this.fb.group({
         first_name: new FormControl({ value: '', disabled: false }, Validators.required),
         last_name: new FormControl({ value: '', disabled: false }, Validators.required),
-        email: new FormControl({ value: '', disabled: false }, Validators.required),
+        email: new FormControl({ value: '', disabled: false },
+          Validators.compose([
+          Validators.required,
+          Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+        ])),
         ticket_category_id: this.ticketDetails[i].ticket_category_id
+        
       })
      )
    })
-   console.log(controlArray.controls)
+   console.log(this.controlArray.controls)
  }  
 
  get f() {
   const ff =  this.userprofileform.controls;
   console.log(ff)
   return ff
- 
 }
 
 validateArray(i){
@@ -114,63 +124,69 @@ validateArray(i){
   return controlArray
 }
   
+  checkValueAllTickets(e) {
+    // const controlArray = this.userprofileform.get('attendees') as FormArray;
+    const controlArray = this.userprofileform.controls.attendees as FormArray;
+    if (e.target.checked) {
+      const firstname = this.userprofileform.get("buyer.first_name").value;
+      const lastname =  this.userprofileform.get("buyer.last_name").value;
+      const email =  this.userprofileform.get("buyer.email").value;
+      console.log(controlArray,firstname, lastname, email )
+    //  console.log(this.userprofileform.get(['attendees'][0]).value);
 
-  // checkValue(e) {
-  //   if (e.target.checked) {
-  //     const firstname = this.userprofileform.controls["firstname"].value;
-  //     const lastname = this.userprofileform.controls["lastname"].value;
-  //     const email = this.userprofileform.controls["email"].value;
-  //     this.userprofileform.controls["fname"].setValue(firstname);
-  //     this.userprofileform.controls["lname"].setValue(lastname);
-  //     this.userprofileform.controls["mail"].setValue(email);
-  //     this.userprofileform.controls["fnameone"].setValue(firstname);
-  //     this.userprofileform.controls["lnameone"].setValue(lastname);
-  //     this.userprofileform.controls["mailone"].setValue(email);
-  //   }
-  //   else {
-  //     this.userprofileform.controls["fname"].setValue('');
-  //     this.userprofileform.controls["lname"].setValue('');
-  //     this.userprofileform.controls["mail"].setValue('');
-  //     this.userprofileform.controls["fnameone"].setValue('');
-  //     this.userprofileform.controls["lnameone"].setValue('');
-  //     this.userprofileform.controls["mailone"].setValue('');
-  //   }
+   let fn = controlArray.parent.controls[0].get('first_name')
+    // controlArray.controls[0].get('last_name').setValue(lastname)
+    // controlArray.controls[0].get('email').setValue(email)
+    // controlArray.controls[1].get('first_name').setValue(firstname)
+    // controlArray.controls[1].get('last_name').setValue(lastname)
+    // controlArray.controls[1].get('email').setValue(email)
+    console.log(
+      fn
+      // controlArray.controls.first_name.value
+      // controlArray.controls.map(value => value.setValue(true))
+      );
 
-  // }
-  // checkValueOne(e) {
-  //   if (e.target.checked) {
-  //     const firstname = this.userprofileform.controls["firstname"].value;
-  //     const lastname = this.userprofileform.controls["lastname"].value;
-  //     const email = this.userprofileform.controls["email"].value;
-  //     this.userprofileform.controls["fname"].setValue(firstname);
-  //     this.userprofileform.controls["lname"].setValue(lastname);
-  //     this.userprofileform.controls["mail"].setValue(email);
+
+     // const att_firstname = controlArray.value["attendees.first_name"].setValue(firstname);
+    //  controlArray.controls[].get["last_name"].setValue(lastname);
+      // this.userprofileform.controls["email"].setValue(email);
+    }
+    else {
+      // this.userprofileform.controls["fname"].setValue('');
+      // this.userprofileform.controls["lname"].setValue('');
+      // this.userprofileform.controls["mail"].setValue('');
+      controlArray.controls[0].get('first_name').setValue('')
+      controlArray.controls[0].get('last_name').setValue('')
+      controlArray.controls[0].get('email').setValue('')
+      controlArray.controls[1].get('first_name').setValue('')
+      controlArray.controls[1].get('last_name').setValue('')
+      controlArray.controls[1].get('email').setValue('')
+
+
+    }
+
+  }
+  checkValueOfOneTicket(e, i: number) {
+    const controlArray = this.userprofileform.controls.attendees as FormArray;
+    if (e.target.checked) {
+      const firstname = this.userprofileform.get("buyer.first_name").value;
+      const lastname =  this.userprofileform.get("buyer.last_name").value;
+      const email =  this.userprofileform.get("buyer.email").value;
+
+      controlArray.controls[i].get('first_name').setValue(firstname)
+      controlArray.controls[i].get('last_name').setValue(lastname)
+      controlArray.controls[i].get('email').setValue(email)
+   
       
-  //   }
-  //   else {
-  //     this.userprofileform.controls["fnameone"].setValue('');
-  //     this.userprofileform.controls["lnameone"].setValue('');
-  //     this.userprofileform.controls["mailone"].setValue('');
-  //   }
+    }
+    else {
+      controlArray.controls[i].get('first_name').setValue('')
+      controlArray.controls[i].get('last_name').setValue('')
+      controlArray.controls[i].get('email').setValue('')
+    }
 
-  // }
-  // checkValueTwo(e) {
-  //   if (e.target.checked) {
-  //     const firstname = this.userprofileform.controls["firstname"].value;
-  //     const lastname = this.userprofileform.controls["lastname"].value;
-  //     const email = this.userprofileform.controls["email"].value;
-  //     this.userprofileform.controls["fnameone"].setValue(firstname);
-  //     this.userprofileform.controls["lnameone"].setValue(lastname);
-  //     this.userprofileform.controls["mailone"].setValue(email);
-      
-  //   }
-  //   else {
-  //     this.userprofileform.controls["fnameone"].setValue('');
-  //     this.userprofileform.controls["lnameone"].setValue('');
-  //     this.userprofileform.controls["mailone"].setValue('');
-  //   }
-
-  // }
+  }
+  
 
 
   onSubmit(){
@@ -183,7 +199,7 @@ setTimeout(() => {
     (<any>window).PaystackPop.setup({
     key: 'pk_test_3adb59c58af1c11a841fd7fe21a27508878babd1',
     email: 'customer@email.com',
-    amount: this.alltotal * 100,
+    amount: this.getTotal * 100,
     container: 'paystackEmbedContainer',
     callback: ( (response) => {
       console.log(response.reference)
@@ -265,6 +281,9 @@ console.log( (<any>window).PaystackPop)
             this.toaster.errorToastr(data.text, null, { toastTimeout: 7000 });
           } else {  
             this.toaster.successToastr(data.text, null, { toastTimeout: 7000 });
+            // setTimeout(() => {
+            //   location.reload()
+            // }, 10000);
           }
 
         })
@@ -320,6 +339,13 @@ console.log( (<any>window).PaystackPop)
     console.log("The Ticket Cat Id", ticketDetail)
  }
 
+ get getTotal() {
+  const totalAmounts = this.ticketDetails.map(tic => ((tic.price * (tic.counter || 0)))); 
+  const totalSum = totalAmounts.reduce((prev , curr) => prev + curr)
+  return totalSum;
+
+  console.log('totalxz', totalSum)   
+}
 
 //  sendUrl() {
 //   this.showIframe = true
