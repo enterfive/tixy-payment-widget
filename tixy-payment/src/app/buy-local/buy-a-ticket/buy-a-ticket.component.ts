@@ -81,7 +81,7 @@ export class BuyATicketComponent implements OnInit {
           Validators.required,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
         ])],
-         amount:new FormControl({ value: this.alltotal, disabled: false }),
+         amount:[`${this.alltotal}`],
          number_of_tickets : ['3'],
          fees: ['100']
          }),
@@ -231,7 +231,7 @@ console.log( (<any>window).PaystackPop)
  const attendees = this.f.attendees.value
  console.log('eventd',event_id, 'buyer_obj', buyer_obj, 'attendees', attendees)
  this.paymentService.buyTicket(event_id, buyer_obj, attendees).subscribe( (data:any) => {
-   console.log("data", data.orderRef)
+   console.log("data", data.orderRef, "buyer_obj", buyer_obj )
    let orderRef = data.orderRef
     //Toggle For Modal Tab
     localStorage.setItem('order_id', orderRef)
@@ -309,15 +309,9 @@ console.log( (<any>window).PaystackPop)
      const newPrice = this.selectedTic.price * this.selectedTic.counter;
      this.selectedTic.counterPrice = newPrice
      this.totalAdd = this.selectedTic.counterPrice * this.selectedTic.counter
-     console.log(this.totalAdd)
-    //  this.total = this.totalAdd + this.totalMinus
-     console.log("counter the price", this.selectedTic.counterPrice)
-    this.alltotal = Object.values(this.ticketDetails).map((x:any) => x.counterPrice).reduce((a, b) => a + b, 0)
-    console.log("tic det",this.alltotal )
     } else {
       this.selectedTic.counter = 1 
     } 
-    console.log("The Ticket Cat Id", ticketDetail)
   }
 
   activateClassMinus(ticketDetail,index){
@@ -329,22 +323,19 @@ console.log( (<any>window).PaystackPop)
      const newPrice = selectedTic.price * selectedTic.counter;
      selectedTic.counterPrice = newPrice
     this.totalMinus = selectedTic.counterPrice
-    console.log(this.totalMinus)
-    this.alltotal = Object.values(this.ticketDetails).map((x:any) => x.counterPrice).reduce((a, b) => b - a, 0)
-    console.log("tic det",this.alltotal )
-    console.log("counter", selectedTic.counterPrice)
     } else {
      //  selectedTic.counter = 0
     }
-    console.log("The Ticket Cat Id", ticketDetail)
  }
 
  get getTotal() {
   const totalAmounts = this.ticketDetails.map(tic => ((tic.price * (tic.counter || 0)))); 
   const totalSum = totalAmounts.reduce((prev , curr) => prev + curr)
+  this.alltotal = totalSum
+  console.log('totalxz', this.alltotal)   
+
   return totalSum;
 
-  console.log('totalxz', totalSum)   
 }
 
 //  sendUrl() {
