@@ -79,8 +79,6 @@ export class BuyATicketComponent implements OnInit {
           Validators.email,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
         ])],
-         amount:["21000"],
-         number_of_tickets : ['3'],
          fees: ['100']
          }),
          attendees: this.fb.array([           
@@ -195,7 +193,7 @@ setTimeout(() => {
 
 });
 
-}, 3000);
+}, 2000);
 console.log( (<any>window).PaystackPop)
 // Paystack Modal Ends
   

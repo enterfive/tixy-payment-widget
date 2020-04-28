@@ -31,8 +31,6 @@ export class PaymentService {
       first_name :string,
       last_name: string,
       email: string,
-      amount: string,
-      number_of_tickets: string,
       fees: string
     },
     attendees: [
