@@ -25,6 +25,8 @@ export class PaymentService {
 
   buyTicket(
     event_id: string, 
+    amount: number,
+    number_of_tickets: number,
     buyer: {
       first_name :string,
       last_name: string,
@@ -45,6 +47,8 @@ export class PaymentService {
       return this.http.post(`${environment.baseUrl}/buy_ticket`,
       {
         event_id,
+        amount,
+        number_of_tickets,
         buyer,
         attendees
       })

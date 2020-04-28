@@ -49,13 +49,24 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
   <!-- Tab Component Start Starts -->
   
   <div class="embed-tab-menu w-tab-menu">
-    <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link w--current">
+    <a 
+      data-w-tab="Tab 1" 
+      class="embed-tab w-inline-block w-tab-link w--current" 
+      style="cursor: default;">
       <div>Tickets</div>
     </a>
-      <a data-w-tab="Tab 4" class="embed-tab w-inline-block w-tab-link">
+      <a 
+        data-w-tab="Tab 4" 
+        class="embed-tab w-inline-block w-tab-link"
+        style="cursor: default;"
+        >
         <div>Information</div>
       </a>
-        <a data-w-tab="Tab 5" class="embed-tab w-inline-block w-tab-link">
+        <a 
+         data-w-tab="Tab 5" 
+         class="embed-tab w-inline-block w-tab-link"
+         style="cursor: default;"
+         >
           <div>Payment</div>
         </a>
       </div>       
@@ -209,13 +220,25 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
   <form [formGroup]="userprofileform" (ngSubmit)="onSubmit()" style="overflow: scroll">
    <!-- Tab Component Start Starts -->
    <div class="embed-tab-menu w-tab-menu">
-    <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link">
+    <a 
+      data-w-tab="Tab 1" 
+      class="embed-tab w-inline-block w-tab-link"
+      style="cursor: default;"
+      >
       <div>Tickets</div>
     </a>
-      <a data-w-tab="Tab 4" class="embed-tab w-inline-block w-tab-link w--current">
+      <a 
+        data-w-tab="Tab 4" 
+        class="embed-tab w-inline-block w-tab-link w--current"
+        style="cursor: default;"
+        >
         <div>Information</div>
       </a>
-        <a data-w-tab="Tab 5" class="embed-tab w-inline-block w-tab-link">
+        <a 
+          data-w-tab="Tab 5" 
+          class="embed-tab w-inline-block w-tab-link"
+          style="cursor: default;"
+          >
           <div>Payment</div>
         </a>
       </div>       
@@ -342,7 +365,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
             <div 
             class="help-text error" 
             style="color:red;" 
-            *ngIf="!controlArray.controls[i].get('first_name') && controlArray.controls[i].get('first_name').touched ">{{ titleAlert }}
+            *ngIf="!controlArray.controls[i].get('first_name').valid && controlArray.controls[i].get('first_name').touched ">{{ titleAlert }}
           </div>
 
             <div>
@@ -360,7 +383,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
             <div 
             class="help-text error" 
             style="color:red;" 
-            *ngIf="!controlArray.controls[i].get('last_name').invalid && controlArray.controls[i].get('last_name').touched ">{{ titleAlert }}
+            *ngIf="!controlArray.controls[i].get('last_name').valid && controlArray.controls[i].get('last_name').touched ">{{ titleAlert }}
           </div>
 
             <div>
@@ -378,7 +401,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
             <div 
             class="help-text error" 
             style="color:red;" 
-            *ngIf="!controlArray.controls[i].get('email').invalid && controlArray.controls[i].get('email').touched ">{{ emailAlert }}
+            *ngIf="!controlArray.controls[i].get('email').valid && controlArray.controls[i].get('email').touched ">{{ emailAlert }}
           </div>
 
           </div>
@@ -419,13 +442,25 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 <div  *ngIf="payment">
    <!-- Tab Component Start Starts -->
    <div class="embed-tab-menu w-tab-menu">
-    <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link">
+    <a 
+      data-w-tab="Tab 1" 
+      class="embed-tab w-inline-block w-tab-link"
+      style="cursor: default;"
+      >
       <div>Tickets</div>
     </a>
-      <a data-w-tab="Tab 4" class="embed-tab w-inline-block w-tab-link">
+      <a 
+        data-w-tab="Tab 4" 
+        class="embed-tab w-inline-block w-tab-link"
+        style="cursor: default;"
+        >
         <div>Information</div>
       </a>
-        <a data-w-tab="Tab 5" class="embed-tab w-inline-block w-tab-link w--current">
+        <a 
+          data-w-tab="Tab 5" 
+          class="embed-tab w-inline-block w-tab-link w--current"
+          style="cursor: default;"
+          >
           <div>Payment</div>
         </a>
       </div>       
@@ -494,7 +529,7 @@ class="embed-order-card"
     >
       <div class="embed-expand">Total</div>
       <ng-container>
-      <div class="embed-flex-0" *ngIf="total">
+      <div class="embed-flex-0" *ngIf="total" [style.display]="getTotal === 0 ? 'none' : 'block'">
         <strong>₦ {{getTotal}}</strong>
       </div>
     </ng-container>

@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChildren, QueryList, ElementRef, Output, EventEmitter } from '@angular/core';
-import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
+import { Component, OnInit,Output, EventEmitter } from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
 import { PaymentService } from '../../Service/payment.service';
 import {
   FormBuilder,
@@ -7,9 +7,6 @@ import {
   FormArray,
   Validators,
   FormControl,
-  ValidationErrors,
-  ValidatorFn,
-  EmailValidator
 } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl, SafeUrl  } from '@angular/platform-browser';
 import { ToastrManager } from 'ng6-toastr-notifications';
@@ -42,6 +39,7 @@ export class BuyATicketComponent implements OnInit {
   add;
   window;
   alltotal;
+  allTicketNumbers;
   mySubscription: any;
   selectedTic;
   number = 1000
@@ -53,7 +51,6 @@ export class BuyATicketComponent implements OnInit {
   obj;
   controlArray
   purchaseCallback;
-  // PaystackPop;
 
   ngOnInit() {  
     this.activatedRoute.params.subscribe(params => {
@@ -79,21 +76,21 @@ export class BuyATicketComponent implements OnInit {
          last_name: ['', Validators.required],
          email:['', Validators.compose([
           Validators.required,
+          Validators.email,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
         ])],
-         amount:[`${this.alltotal}`],
+         amount:["21000"],
          number_of_tickets : ['3'],
          fees: ['100']
          }),
-         attendees: this.fb.array([
-           
+         attendees: this.fb.array([           
          ])
        })    
    }
   
   
    attendeesControl() {
-     this.controlArray = this.userprofileform.get('attendees') as FormArray;
+    this.controlArray = this.userprofileform.get('attendees') as FormArray;
     Object.keys(this.ticketDetails).forEach((i) => {
      this.controlArray.push(
        this.fb.group({
@@ -102,6 +99,7 @@ export class BuyATicketComponent implements OnInit {
         email: new FormControl({ value: '', disabled: false },
           Validators.compose([
           Validators.required,
+          Validators.email,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
         ])),
         ticket_category_id: this.ticketDetails[i].ticket_category_id
@@ -120,41 +118,26 @@ export class BuyATicketComponent implements OnInit {
 
 validateArray(i){
   const controlArray = this.userprofileform.get('attendees') as FormArray;
-  console.log(controlArray.controls[0].invalid && controlArray.controls[0].touched)
+  console.log(controlArray.controls[i].invalid && controlArray.controls[1].touched)
   return controlArray
 }
   
   checkValueAllTickets(e) {
-    // const controlArray = this.userprofileform.get('attendees') as FormArray;
     const controlArray = this.userprofileform.controls.attendees as FormArray;
     if (e.target.checked) {
       const firstname = this.userprofileform.get("buyer.first_name").value;
       const lastname =  this.userprofileform.get("buyer.last_name").value;
       const email =  this.userprofileform.get("buyer.email").value;
       console.log(controlArray,firstname, lastname, email )
-    //  console.log(this.userprofileform.get(['attendees'][0]).value);
 
-   let fn = controlArray.parent.controls[0].get('first_name')
-    // controlArray.controls[0].get('last_name').setValue(lastname)
-    // controlArray.controls[0].get('email').setValue(email)
-    // controlArray.controls[1].get('first_name').setValue(firstname)
-    // controlArray.controls[1].get('last_name').setValue(lastname)
-    // controlArray.controls[1].get('email').setValue(email)
-    console.log(
-      fn
-      // controlArray.controls.first_name.value
-      // controlArray.controls.map(value => value.setValue(true))
-      );
-
-
-     // const att_firstname = controlArray.value["attendees.first_name"].setValue(firstname);
-    //  controlArray.controls[].get["last_name"].setValue(lastname);
-      // this.userprofileform.controls["email"].setValue(email);
+      controlArray.controls[0].get('first_name').setValue(firstname)
+      controlArray.controls[0].get('last_name').setValue(lastname)
+      controlArray.controls[0].get('email').setValue(email)
+      controlArray.controls[1].get('first_name').setValue(firstname)
+      controlArray.controls[1].get('last_name').setValue(lastname)
+      controlArray.controls[1].get('email').setValue(email)
     }
     else {
-      // this.userprofileform.controls["fname"].setValue('');
-      // this.userprofileform.controls["lname"].setValue('');
-      // this.userprofileform.controls["mail"].setValue('');
       controlArray.controls[0].get('first_name').setValue('')
       controlArray.controls[0].get('last_name').setValue('')
       controlArray.controls[0].get('email').setValue('')
@@ -176,8 +159,6 @@ validateArray(i){
       controlArray.controls[i].get('first_name').setValue(firstname)
       controlArray.controls[i].get('last_name').setValue(lastname)
       controlArray.controls[i].get('email').setValue(email)
-   
-      
     }
     else {
       controlArray.controls[i].get('first_name').setValue('')
@@ -214,7 +195,7 @@ setTimeout(() => {
 
 });
 
-}, 2000);
+}, 3000);
 console.log( (<any>window).PaystackPop)
 // Paystack Modal Ends
   
@@ -226,13 +207,15 @@ console.log( (<any>window).PaystackPop)
 
   submitInformationForm(){
  //Expected Form Object
- const event_id = this.eventId;
- const buyer_obj = this.f.buyer.value
- const attendees = this.f.attendees.value
- console.log('eventd',event_id, 'buyer_obj', buyer_obj, 'attendees', attendees)
- this.paymentService.buyTicket(event_id, buyer_obj, attendees).subscribe( (data:any) => {
-   console.log("data", data.orderRef, "buyer_obj", buyer_obj )
-   let orderRef = data.orderRef
+    const event_id = this.eventId;
+    const amount = this.getTotal;
+    const numberOfTicket  = this.allTicketNumbers;
+    const buyer_obj = this.f.buyer.value
+    const attendees = this.f.attendees.value
+    console.log('eventd',event_id, 'buyer_obj', buyer_obj, 'attendees', attendees)
+    this.paymentService.buyTicket(event_id,amount,numberOfTicket,buyer_obj, attendees).subscribe( (data:any) => {
+    console.log("data", data.orderRef, "buyer_obj", buyer_obj, "data", data )
+    let orderRef = data.orderRef
     //Toggle For Modal Tab
     localStorage.setItem('order_id', orderRef)
    
@@ -265,7 +248,6 @@ console.log( (<any>window).PaystackPop)
       console.log("total", this.total, "addprice", this.add)
       console.log(this.ticketDetails)
       this.attendeesControl()
-
     })
   }
 
@@ -274,7 +256,6 @@ console.log( (<any>window).PaystackPop)
         const orderId= localStorage.getItem('order_id');
         const transaction_ref = localStorage.getItem('transaction_ref')
         const paymentPlatform = "paystack"
-    
         this.paymentService.ticketPurchaseCallback(orderId, transaction_ref, paymentPlatform).subscribe((data: any) => {
           console.log(data)
           if(data.error){
@@ -288,17 +269,6 @@ console.log( (<any>window).PaystackPop)
 
         })
       }
-
-
-  activateClass(ticketDetail){
-    ticketDetail.active = !ticketDetail.active;
-    if(!ticketDetail.active) {
-      return ticketDetail - 1
-    } else {
-      console.log("The Ticket Cat Id", ticketDetail)
-
-    }
-  }
 
   activateClassAdd(ticketDetail,index){
     ticketDetail.active = false;
@@ -329,14 +299,18 @@ console.log( (<any>window).PaystackPop)
  }
 
  get getTotal() {
+  //For Total Fees
+  const ticketNumbers = this.ticketDetails.map(tic => (tic.counter || 0)); 
+  const sumOfTicketNumbers = ticketNumbers.reduce((prev , curr) => prev + curr)
+  this.allTicketNumbers = sumOfTicketNumbers
+  console.log(sumOfTicketNumbers)
+  //For Total Amount
   const totalAmounts = this.ticketDetails.map(tic => ((tic.price * (tic.counter || 0)))); 
   const totalSum = totalAmounts.reduce((prev , curr) => prev + curr)
   this.alltotal = totalSum
-  console.log('totalxz', this.alltotal)   
-
   return totalSum;
-
 }
+
 
 //  sendUrl() {
 //   this.showIframe = true
