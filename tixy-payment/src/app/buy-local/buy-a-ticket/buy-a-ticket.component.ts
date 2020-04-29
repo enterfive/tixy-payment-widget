@@ -166,11 +166,15 @@ validateArray(i){
 
   }
   
-
+//  Initializes Paystack Modal
+  toggleInformation(){
+    (<any>window).PaystackPop.isInitialized = false
+      this.information = true
+      this.ticket = false
+      this.payment = false
+    }
 
   onSubmit(){
-  //Information Tab Form Function
-    this.submitInformationForm()
  // Paystack Modal Starts
 setTimeout(() => {
   let shown = document.getElementById('paystackEmbedContainer') as HTMLElement;
@@ -190,10 +194,10 @@ setTimeout(() => {
      console.log("windows closed")
     alert('window closed');
   },
-
 });
-
 }, 2000);
+//Information Tab Form Function
+this.submitInformationForm()
 console.log( (<any>window).PaystackPop)
 // Paystack Modal Ends
   
@@ -227,15 +231,6 @@ console.log( (<any>window).PaystackPop)
     this.payment = false
   }
 
-  
-  toggleInformation(){
-    (<any>window).PaystackPop.isInitialized = false
-    this.information = true
-    this.ticket = false
-    this.payment = false
-  }
-
- 
 
   getOpenEventTicket(){
     const eventId = this.eventId
