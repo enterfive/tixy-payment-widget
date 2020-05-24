@@ -10,3 +10,6 @@ button:disabled {
   cursor: not-allowed;
   pointer-events: all !important;
 }
+.paystack-embed-body{
+  padding-top: 30px !important;
+}

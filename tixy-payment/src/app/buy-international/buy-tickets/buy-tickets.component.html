@@ -19,56 +19,19 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 <script src="https://js.stripe.com/v3/"></script>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
 <!-- <link id="load-css-button.min.css" rel="stylesheet" type="text/css" href="https://paystack.com/public/css/button.min.css"> -->
 </head>
 
-<body class="body pattern-2">
-  <div class="h-full row fill center">
-    <a 
-    data-w-id="7e19bbe1-2c28-e59b-5127-b7db0a19a342" 
-    class="button w-button">
-    <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    stroke-width="2" 
-    stroke-linecap="round" 
-    stroke-linejoin="round" 
-    class="feather feather-credit-card icon move-left">
-    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-    <line x1="1" y1="10" x2="23" y2="10"></line>
-  </svg> Test buying a ticket</a>
-</div>
-<div style="display: flex; opacity: 1;" class="embed-wrapper">
-  <div class="embed-action-bar _2">
-    <a href="#" class="embed-button subtle w-button">
-      <svg 
-      xmlns="http://www.w3.org/2000/svg" 
-      width="24" height="24" 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      stroke-width="2" 
-      stroke-linecap="round" 
-      stroke-linejoin="round" 
-      class="feather feather-chevron-left icon">
-        <polyline points="15 18 9 12 15 6"></polyline>
-      </svg> Back</a>
-      <a class="embed-button w-button">Continue 
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right icon">
-          <polyline points="9 18 15 12 9 6">
-        </polyline>
-      </svg>
-    </a>
-  </div>
+<body  class="body pattern-2">
+<div [hidden]="hide" class="embed-wrapper">
+ 
   <div class="embed-container">
     <div class="row center padded-landscape v-mobile">
       <div class="embed-logo"></div>
       <div class="push-right expand no-margin-mobile">
-        <h2 class="embed-title">Alpha festival 2020</h2>
+        <h2  class="embed-title">Alpha festival 2020</h2>
         <h3 class="embed-date">Jan 11 - Jan 12 <span class="embed-dot">•</span> 11am - 5pm</h3></div>
         <div class="embed-icon-wrap close">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x embed-icon" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt="">
@@ -81,23 +44,33 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
         <div class="embed-card-carousel">
           <div data-duration-in="300" data-duration-out="100" class="tabs w-tabs">
 
-  
             <!-- Entire Ticket Section Starts -->
-            <ng-container *ngIf="ticket" >
-
-               <!-- Tab Component Start Starts -->
-            <div class="embed-tab-menu w-tab-menu">
-              <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link w--current">
-                <div>Tickets</div>
-              </a>
-                <a data-w-tab="Tab 4" class="embed-tab w-inline-block w-tab-link">
-                  <div>Information</div>
-                </a>
-                  <a data-w-tab="Tab 5" class="embed-tab w-inline-block w-tab-link">
-                    <div>Payment</div>
-                  </a>
-                </div>       
-            <!-- Tab Component Start Ends -->
+  <ng-container *ngIf="ticket">
+  <!-- Tab Component Start Starts -->
+  
+  <div class="embed-tab-menu w-tab-menu">
+    <a 
+      data-w-tab="Tab 1" 
+      class="embed-tab w-inline-block w-tab-link w--current" 
+      style="cursor: default;">
+      <div>Tickets</div>
+    </a>
+      <a 
+        data-w-tab="Tab 4" 
+        class="embed-tab w-inline-block w-tab-link"
+        style="cursor: default;"
+        >
+        <div>Information</div>
+      </a>
+        <a 
+         data-w-tab="Tab 5" 
+         class="embed-tab w-inline-block w-tab-link"
+         style="cursor: default;"
+         >
+          <div>Payment</div>
+        </a>
+      </div>       
+  <!-- Tab Component Start Ends -->
 
                 <div class="embed-tab-content w-tab-content">
                   <div data-w-tab="Tab 1" class="embed-tab-pane w-tab-pane w--tab-active">
@@ -108,20 +81,22 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                         <a 
                         [routerLink]="['/buy-a-local-ticket', eventId]"
                         data-w-tab="Tab 1" 
-                        class="embed-tab-switch w-inline-block w-tab-link">
+                        class="embed-tab-switch w-inline-block w-tab-link"
+                        >
                           <div>Naira prices</div>
                         </a>
                           <a 
-                          [routerLink]="['/buy-international-ticket', eventId]" 
+                          [routerLink]="['/buy-international-ticket', eventId]"
                           data-w-tab="Tab 3" 
                           class="embed-tab-switch w-inline-block w-tab-link w--current">
-                            <div>International prices</div></a>
+                            <div>International prices</div>
+                          </a>
                           </div>
                           <div class="embed-nested-tab-content padded w-tab-content">
                             <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
 
                              <!-- Pick Your Ticket Card Starts -->
-                             <div 
+                              <div 
                               class="embed-ticket" 
                               *ngFor="let ticketDetail of ticketDetails; let index = index" 
                               [ngClass]="{'active': ticketDetail.counter > 0 }"
@@ -133,7 +108,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                                     <div class="embed-pricing">
                                       <div 
                                       class="embed-ticket-price active">
-                                      $ {{ ticketDetail.counterPrice || ticketDetail.price / 400}} 
+                                      ₦ {{ ticketDetail.counterPrice || ticketDetail.price}} 
                                     </div>
                                     
                                       <div class="embed-ticket-quantity">
@@ -208,11 +183,13 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
                                   </div>  
                                 </div>
                               </div>
-                     <!-- Pick Your Ticket Card Ends -->
-          </div>
-      </div>
-    </div>
+
+                              
+                             <!-- Pick Your Ticket Card Ends -->
+        </div>
   </div>
+</div>
+</div>
 </div>
 <div class="embed-action-bar _1">
   <a >
@@ -220,11 +197,16 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
       <polyline points="15 18 9 12 15 6"></polyline>
     </svg>  -->
   </a> 
-    <a (click)="toggleInformation()" class="embed-button w-button">Continue 
+  <ng-container *ngIf="ticketDetails">
+    <button
+    [disabled]="ticketDetails.counter > 0"
+     (click)="toggleInformation()" 
+     class="embed-button w-button">Continue 
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right icon">
         <polyline points="9 18 15 12 9 6"></polyline>
       </svg>
-    </a>
+    </button>
+  </ng-container>
   </div>
 </ng-container>
 
@@ -234,115 +216,222 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
 
  <!-- Entire Information Section Starts -->
 
-
-<ng-container *ngIf="information">
-<form style="overflow: scroll">
- <!-- Tab Component Start Starts -->
- <div class="embed-tab-menu w-tab-menu">
-  <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link">
-    <div>Tickets</div>
-  </a>
-    <a data-w-tab="Tab 4" class="embed-tab w-inline-block w-tab-link w--current">
-      <div>Information</div>
+ <ng-container *ngIf="information" >
+  <form [formGroup]="userprofileform" (ngSubmit)="onSubmit()" style="overflow: scroll">
+   <!-- Tab Component Start Starts -->
+   <div class="embed-tab-menu w-tab-menu">
+    <a 
+      data-w-tab="Tab 1" 
+      class="embed-tab w-inline-block w-tab-link"
+      style="cursor: default;"
+      >
+      <div>Tickets</div>
     </a>
-      <a data-w-tab="Tab 5" class="embed-tab w-inline-block w-tab-link">
-        <div>Payment</div>
+      <a 
+        data-w-tab="Tab 4" 
+        class="embed-tab w-inline-block w-tab-link w--current"
+        style="cursor: default;"
+        >
+        <div>Information</div>
       </a>
-    </div>       
-<!-- Tab Component Start Ends -->
-
-
-<div  
-data-w-tab="Tab 4" 
-class="pan w-tab-pane w--tab-active" 
-style="opacity: 1; transition: opacity 300ms ease 0s;">
-  <h3 class="heading-6">Fill out buyer and ticket information</h3>
-  <div class="w-form">
-    <form class="embed-form">
-      <div class="embed-form-row">
-        <div class="embed-section-column">
-          <div class="embed-form-section-sticky">
-            <h4 class="embed-heading">Buyer information</h4>
-            <label class="w-checkbox embed-checkbox">
-              <input type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="w-checkbox-input embed-checkbox-component">
-              <span class="w-form-label">Copy buyer information to all tickets</span>
-            </label>
+        <a 
+          data-w-tab="Tab 5" 
+          class="embed-tab w-inline-block w-tab-link"
+          style="cursor: default;"
+          >
+          <div>Payment</div>
+        </a>
+      </div>       
+  <!-- Tab Component Start Ends -->
+  <div  
+  data-w-tab="Tab 4" 
+  class="pan w-tab-pane w--tab-active" 
+  style="opacity: 1; transition: opacity 300ms ease 0s;">
+    <h3 class="heading-6">Fill out buyer and ticket information</h3>
+    <div class="w-form" style="padding-bottom: 64px!important;">
+      <!-- <form class="embed-form"> -->
+        <div formGroupName="buyer" class="embed-form-row">
+          <div class="embed-section-column">
+            <div class="embed-form-section-sticky">
+              <h4 class="embed-heading">Buyer information</h4>
+              <label class="w-checkbox embed-checkbox">
+                <input 
+                type="checkbox" 
+                id="checkbox" 
+                name="checkbox" 
+                data-name="Checkbox" 
+                class="w-checkbox-input embed-checkbox-component"
+                (change)="checkValueAllTickets($event)"
+                >
+                <span class="w-form-label">Copy buyer information to all tickets</span>
+              </label>
+            </div>
           </div>
+          <div class="embed-expand">
+            <div>
+              <label for="name-5" class="embed-label">First name</label>
+              <input 
+              type="text" 
+              class="embed-input w-input" 
+              maxlength="256" 
+              name="name-5" 
+              data-name="Name 5" 
+              id="name-5"
+              formControlName="first_name"
+              >
+              </div>
+              <div 
+              class="help-text error" 
+              style="color:red;" 
+              *ngIf="!userprofileform.get('buyer.first_name').valid && userprofileform.get('buyer.first_name').touched">{{ titleAlert }}
+            </div>
+
+            <div>
+              <label for="name-6" class="embed-label">Last name</label>
+              <input 
+              type="text" 
+              class="embed-input w-input" 
+              maxlength="256" 
+              name="name-5" 
+              data-name="Name 5" 
+              id="name-5"
+              formControlName="last_name"
+              >
+            </div>
+            <div 
+              class="help-text error" 
+              style="color:red;" 
+              *ngIf="!userprofileform.get('buyer.last_name').valid && userprofileform.get('buyer.last_name').touched">{{ titleAlert }}
+            </div>
+            <div>
+              <label for="name-6" class="embed-label">Email address</label>
+              <input 
+              type="email" 
+              class="embed-input w-input" 
+              maxlength="256" 
+              name="name-5" 
+              data-name="Name 5" 
+              id="name-5"
+              formControlName="email"
+              >
+            </div>
+            <div 
+            class="help-text error" 
+            style="color:red;" 
+            *ngIf="!userprofileform.get('buyer.email').valid && userprofileform.get('buyer.email').touched">{{ emailAlert }}
+          </div>
+          </div>
+          
         </div>
-        <div class="embed-expand">
-          <div>
-            <label for="name-5" class="embed-label">First name</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
+        
+         <!-- Dynamic Ticket Category Starts -->
+         <div formArrayName="attendees">
+         <ng-container
+         *ngFor="let ticket of ticketDetails; let i = index"
+         [formGroupName]="i"
+         >
+         <div  
+         class="embed-form-row"
+         >
+         
+          <div class="embed-section-column">
+            <div class="embed-form-section-sticky">
+              <h4 class="embed-heading"> {{i + 1}}. {{ticket.category_name }}</h4>
+              <label class="w-checkbox embed-checkbox">
+                <input
+                type="checkbox" 
+                id="checkbox-2" 
+                name="checkbox-2" 
+                data-name="Checkbox 2" 
+                class="w-checkbox-input embed-checkbox-component"
+                (change)="checkValueOfOneTicket($event, i)"
+                ><span class="w-form-label">Same as buyer information</span>
+              </label>
+            </div>
           </div>
-          <div>
-            <label for="name-6" class="embed-label">Last name</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
-          </div>
-          <div>
-            <label for="name-6" class="embed-label">Email address</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
-          </div>
-        </div>
-      </div>
+          <div class="embed-expand">
+            <div>
+              <label for="name-6" class="embed-label">First name</label>
+              <input 
+              type="text" 
+              class="embed-input w-input" 
+              maxlength="256" 
+              name="name-5" 
+              data-name="Name 5" 
+              formControlName="first_name"
+              >
+            </div>
 
-       <!-- Dynamic Ticket Category Starts -->
-       <div class="embed-form-row" *ngFor="let ticket of ticketDetails| keyvalue; let i = index">
-        <div class="embed-section-column">
-          <div class="embed-form-section-sticky">
-            <h4 class="embed-heading"> {{i+1}}. {{ticket.value.category_name}}</h4>
-            <label class="w-checkbox embed-checkbox">
-              <input type="checkbox" id="checkbox-2" name="checkbox-2" data-name="Checkbox 2" checked="" class="w-checkbox-input embed-checkbox-component"><span class="w-form-label">Same as buyer information</span>
-            </label>
+            <div 
+            class="help-text error" 
+            style="color:red;" 
+            *ngIf="!controlArray.controls[i].get('first_name').valid && controlArray.controls[i].get('first_name').touched ">{{ titleAlert }}
           </div>
-        </div>
-        <div class="embed-expand">
-          <div>
-            <label for="name-6" class="embed-label">First name</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
-          </div>
-          <div>
-            <label for="name-6" class="embed-label">Last name</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
-          </div>
-          <div>
-            <label for="name-6" class="embed-label">Email address</label>
-            <input type="text" class="embed-input w-input" maxlength="256" name="name-5" data-name="Name 5" id="name-5">
-          </div>
-        </div>
-      </div>
-      <!-- Dynamic Ticket Category Ends -->
-      
-    </form>
 
-   
+            <div>
+              <label for="name-6" class="embed-label">Last name</label>
+              <input 
+              type="text" 
+              class="embed-input w-input" 
+              maxlength="256" 
+              name="name-5" 
+              data-name="Name 5" 
+              id="name-5"
+              formControlName="last_name"
+              >
+            </div>
+            <div 
+            class="help-text error" 
+            style="color:red;" 
+            *ngIf="!controlArray.controls[i].get('last_name').valid && controlArray.controls[i].get('last_name').touched ">{{ titleAlert }}
+          </div>
 
-    <div class="w-form-done">
-      <div>Thank you! Your submission has been received!</div>
+            <div>
+              <label for="name-6" class="embed-label">Email address</label>
+              <input 
+              type="email" 
+              class="embed-input w-input" 
+              maxlength="256" 
+              name="name-5" 
+              data-name="Name 5" 
+              id="name-5"
+              formControlName="email"
+              >
+            </div>
+            <div 
+            class="help-text error" 
+            style="color:red;" 
+            *ngIf="!controlArray.controls[i].get('email').valid && controlArray.controls[i].get('email').touched ">{{ emailAlert }}
+          </div>
+
+          </div>
+        </div>   
+      </ng-container>
     </div>
-    <div class="w-form-fail">
-      <div>Oops! Something went wrong while submitting the form.</div>
+        <!-- Dynamic Ticket Category Ends -->
+    </div>  
+  </div>
+  
+  
+  <div class="embed-action-bar _1">
+    <a (click)="toggleTicket()" class="embed-button subtle w-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left icon">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg> Back</a>
+      <button 
+      type="submit"
+      class="embed-button w-button"
+      [disabled]="!userprofileform.valid"
+      >Continue 
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right icon">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
     </div>
-    
-  </div>
-</div>
+  </form>
+  </ng-container>
 
-
-<div class="embed-action-bar _1">
-  <a (click)="toggleTicket()" class="embed-button subtle w-button">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left icon">
-      <polyline points="15 18 9 12 15 6"></polyline>
-    </svg> Back</a>
-    <a (click)="togglePayment()" class="embed-button w-button">Continue 
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right icon">
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-    </a>
-  </div>
-</form>
-</ng-container>
-
-
-
+ 
 
 
  <!-- Entire Information Section Ends -->
@@ -350,28 +439,34 @@ style="opacity: 1; transition: opacity 300ms ease 0s;">
 
 
  <!-- Entire Payment Section Starts -->
-
-<ng-container  *ngIf="payment">
-  
-
+<div  *ngIf="payment">
    <!-- Tab Component Start Starts -->
- <div class="embed-tab-menu w-tab-menu">
-  <a data-w-tab="Tab 1" class="embed-tab w-inline-block w-tab-link">
-    <div>Tickets</div>
-  </a>
-    <a data-w-tab="Tab 4" class="embed-tab w-inline-block w-tab-link">
-      <div>Information</div>
+   <div class="embed-tab-menu w-tab-menu">
+    <a 
+      data-w-tab="Tab 1" 
+      class="embed-tab w-inline-block w-tab-link"
+      style="cursor: default;"
+      >
+      <div>Tickets</div>
     </a>
-      <a data-w-tab="Tab 5" class="embed-tab w-inline-block w-tab-link w--current">
-        <div>Payment</div>
+      <a 
+        data-w-tab="Tab 4" 
+        class="embed-tab w-inline-block w-tab-link"
+        style="cursor: default;"
+        >
+        <div>Information</div>
       </a>
-    </div>       
-<!-- Tab Component Start Ends -->
-
-
-
-
-
+        <a 
+          data-w-tab="Tab 5" 
+          class="embed-tab w-inline-block w-tab-link w--current"
+          style="cursor: default;"
+          >
+          <div>Payment</div>
+        </a>
+      </div>       
+  <!-- Tab Component Start Ends -->
+  
+  <div id="paystackEmbedContainer"></div>
 
 <div class="embed-action-bar _1">
   <a (click)="toggleInformation()" class="embed-button subtle w-button">
@@ -385,103 +480,65 @@ style="opacity: 1; transition: opacity 300ms ease 0s;">
     </a>
   </div>
 
-</ng-container>
+</div>
 
  <!-- Entire Payment Section Ends -->
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
-
-
-
-
-
 <!-- Your Order Side Bar Starts -->
 <ng-container *ngIf="ticketDetails ">
-  <div 
-  class="embed-order-card"
-  >
-    <h4 class="embed-order-title">Your order</h4>
-    <div class="embed-order-list-items">
-      <div 
-      class="embed-order-row" 
-      *ngFor="let ticketDetail of ticketDetails; let index = index" 
-      [style.display]="ticketDetail.counter > 0 ? 'flex' : 'none'"
-      >
-      
-        <div>{{index+1}}</div>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x embed-icon small nudge-left nudge-right grey" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt="">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-      <div class="embed-expand">{{ticketDetail.category_name}}</div>
-      <div class="embed-flex-0"><strong class="embed-bold">$ {{ ticketDetail.counterPrice || ticketDetail.price}}</strong>
-      </div>
-    </div>
+<div 
+class="embed-order-card"
+>
+  <h4 class="embed-order-title">Your order</h4>
+  <div class="embed-order-list-items">
+    <div 
+    class="embed-order-row" 
+    *ngFor="let ticketDetail of ticketDetails; let index = index" 
+    [style.display]="ticketDetail.counter > 0 ? 'flex' : 'none'"
+    >
     
-      <div class="embed-divider"></div>
-      <div class="embed-order-row small">
-        <div class="embed-expand">Subtotal</div>
-        <div class="embed-flex-0">$ {{  ticketDetails.price}}</div>
-      </div>
-      <div class="embed-order-row small">
-        <div class="embed-expand">Fees</div>
-        <div class="embed-flex-0">$ 150</div>
-      </div>
-    </div>
-    <div class="embed-order-meta-info">
-      <div 
-      class="embed-order-row big"
-      
-      >
-        <div class="embed-expand">Total</div>
-        <ng-container>
-        <div class="embed-flex-0" *ngIf="add">
-          <strong>$ {{add / 400}}</strong>
-        </div>
-      </ng-container>
-      </div>
+      <div>{{ticketDetail.counter || 0}}</div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x embed-icon small nudge-left nudge-right grey" src="https://assets.website-files.com/plugins/Basic/assets/placeholder.60f9b1840c.svg" alt="">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+    <div class="embed-expand">{{ticketDetail.category_name}}</div>
+    <div class="embed-flex-0"><strong class="embed-bold">₦ {{ ticketDetail.counterPrice || ticketDetail.price}}</strong>
     </div>
   </div>
-  </ng-container>
   
+    <div class="embed-divider"></div>
+    <div class="embed-order-row small">
+      <div class="embed-expand">Subtotal</div>
+      <div class="embed-flex-0">₦ {{  ticketDetails.price}}</div>
+    </div>
+    <div class="embed-order-row small">
+      <div class="embed-expand">Fees</div>
+      <div class="embed-flex-0">₦ 150</div>
+    </div>
+  </div>
+  <div class="embed-order-meta-info">
+    <div 
+    class="embed-order-row big"
+    
+    >
+      <div class="embed-expand">Total</div>
+      <ng-container>
+      <div class="embed-flex-0" *ngIf="total" [style.display]="getTotal === 0 ? 'none' : 'block'">
+        <strong>₦ {{getTotal}}</strong>
+      </div>
+    </ng-container>
+    </div>
+  </div>
+</div>
+</ng-container>
+
 <!-- Your Order Side Bar Ends -->
 </div>
 <div class="embed-footer">
-  <a href="#" class="embed-link">Privacy Policy</a>
-  <a href="#" class="row shrink center w-inline-block">
+  <a class="embed-link">Privacy Policy</a>
+  <a class="row shrink center w-inline-block">
     <div class="embed-text">Powered by Tixy</div>
     <img src="https://assets.website-files.com/5c48989a8f89e1684ff6c0d6/5e1751f8f80710004765be08_tixyblk.svg" alt="" class="icon small nudge-right">
   </a>

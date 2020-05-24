@@ -16,7 +16,6 @@ import { ToastrManager } from 'ng6-toastr-notifications';
   styleUrls: ['./buy-a-ticket.component.css']
 })
 export class BuyATicketComponent implements OnInit {
-
   ticketId
   ticket = true
   information  = false
@@ -49,15 +48,16 @@ export class BuyATicketComponent implements OnInit {
   userprofileform: FormGroup
   ticketcategory_id;
   obj;
-  controlArray
+  controlArray;
   purchaseCallback;
-
+ 
   ngOnInit() {  
     this.activatedRoute.params.subscribe(params => {
       this.eventId = params['id'];
      console.log(this.eventId);
    });
-   this.getOpenEventTicket()
+   this.getOpenEventTicket();
+   this.classAdd()
 }
 
 
@@ -89,6 +89,7 @@ export class BuyATicketComponent implements OnInit {
   
    attendeesControl() {
     this.controlArray = this.userprofileform.get('attendees') as FormArray;
+    console.log(this.ticketDetails)
     Object.keys(this.ticketDetails).forEach((i) => {
      this.controlArray.push(
        this.fb.group({
@@ -209,19 +210,19 @@ console.log( (<any>window).PaystackPop)
 
   submitInformationForm(){
  //Expected Form Object
-    const event_id = this.eventId;
-    const amount = this.getTotal;
-    const numberOfTicket  = this.allTicketNumbers;
-    const buyer_obj = this.f.buyer.value
-    const attendees = this.f.attendees.value
-    console.log('eventd',event_id, 'buyer_obj', buyer_obj, 'attendees', attendees)
-    this.paymentService.buyTicket(event_id,amount,numberOfTicket,buyer_obj, attendees).subscribe( (data:any) => {
-    console.log("data", data.orderRef, "buyer_obj", buyer_obj, "data", data )
-    let orderRef = data.orderRef
-    //Toggle For Modal Tab
-    localStorage.setItem('order_id', orderRef)
+//     const event_id = this.eventId;
+//     const amount = this.getTotal;
+//     const numberOfTicket  = this.allTicketNumbers;
+//     const buyer_obj = this.f.buyer.value
+//     const attendees = this.f.attendees.value
+//     console.log('eventd',event_id, 'buyer_obj', buyer_obj, 'attendees', attendees)
+//     this.paymentService.buyTicket(event_id,amount,numberOfTicket,buyer_obj, attendees).subscribe( (data:any) => {
+//     console.log("data", data.orderRef, "buyer_obj", buyer_obj, "data", data )
+//     let orderRef = data.orderRef
+//     //Toggle For Modal Tab
+//     localStorage.setItem('order_id', orderRef)
    
- })
+//  })
   }
 
 
@@ -237,9 +238,6 @@ console.log( (<any>window).PaystackPop)
     this.paymentService.getOpenTicketCategory(eventId).subscribe( (res:any) => {
       this.ticketDetails = res;
       this.total = res.map(x => x.price)
-      this.add = res.map(tag => tag.counterPrice).reduce((a, b) => a + b, 0);
-      console.log("total", this.total, "addprice", this.add)
-      console.log(this.ticketDetails)
       this.attendeesControl()
     })
   }
@@ -255,29 +253,27 @@ console.log( (<any>window).PaystackPop)
             this.toaster.errorToastr(data.text, null, { toastTimeout: 7000 });
           } else {  
             this.toaster.successToastr(data.text, null, { toastTimeout: 7000 });
-            // setTimeout(() => {
-            //   location.reload()
-            // }, 10000);
           }
-
         })
       }
 
-  activateClassAdd(ticketDetail,index){
+  activateClassAdd(ticketDetail?,index?){
     ticketDetail.active = false;
     ticketDetail.active = !ticketDetail.active;
-     this.selectedTic = this.ticketDetails[index]
+    this.selectedTic = this.ticketDetails[index]
     if(this.selectedTic.counter) { 
      this.selectedTic.counter++;
      const newPrice = this.selectedTic.price * this.selectedTic.counter;
      this.selectedTic.counterPrice = newPrice
      this.totalAdd = this.selectedTic.counterPrice * this.selectedTic.counter
+     
     } else {
       this.selectedTic.counter = 1 
     } 
   }
+  
 
-  activateClassMinus(ticketDetail,index){
+  activateClassMinus(ticketDetail?,index?){
     ticketDetail.active = false;   
     ticketDetail.active = !ticketDetail.active;
     const selectedTic = this.ticketDetails[index]  
@@ -291,28 +287,29 @@ console.log( (<any>window).PaystackPop)
     }
  }
 
+ classAdd(){
+   console.log(this.selectedTic)
+ }
+
  get getTotal() {
   //For Total Fees
   const ticketNumbers = this.ticketDetails.map(tic => (tic.counter || 0)); 
   const sumOfTicketNumbers = ticketNumbers.reduce((prev , curr) => prev + curr)
   this.allTicketNumbers = sumOfTicketNumbers
-  console.log(sumOfTicketNumbers)
+
+
+  let selectedTickArray = [];
+  selectedTickArray.push(this.selectedTic)
+ 
+  console.log(selectedTickArray)
   //For Total Amount
   const totalAmounts = this.ticketDetails.map(tic => ((tic.price * (tic.counter || 0)))); 
   const totalSum = totalAmounts.reduce((prev , curr) => prev + curr)
+  const all =  this.ticketDetails;
+  // console.log(all)
   this.alltotal = totalSum
   return totalSum;
 }
-
-
-//  sendUrl() {
-//   this.showIframe = true
-//   let playerUrl = `https://paystack.com/assets/payment/production/inline.html?id=paystack7jWUC&amp;key=pk_live_7445b0e87d2616a05199316003a7ae8e3227a6a5&amp;email=customer%40email.com&amp;amount=10000&amp;currency=NGN&amp;container=paystackEmbedContainer&amp;metadata=%7B%22referrer%22%3A%22https%3A%2F%2Ftixy-2-0.webflow.io%2Fbuy-a-ticket-alt%22%7D&amp;mode=popup&amp;hasTLSFallback=true` // try it first, if it doesn't work use the sanitized URL
-//   this.trustedDashboardUrl = this._sanitizer.bypassSecurityTrustResourceUrl(playerUrl);
-//   this.iframeURL = this.trustedDashboardUrl;
-//   console.log( this.iframeURL)
-// }
-
 }
 
 

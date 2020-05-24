@@ -336,7 +336,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
          
           <div class="embed-section-column">
             <div class="embed-form-section-sticky">
-              <h4 class="embed-heading"> {{i + 1}}. {{ticket.category_name}}</h4>
+              <h4 class="embed-heading"> {{i + 1}}. {{ticket.category_name }}</h4>
               <label class="w-checkbox embed-checkbox">
                 <input
                 type="checkbox" 
@@ -421,8 +421,10 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
       <button 
       type="submit"
       class="embed-button w-button"
-      [disabled]="!userprofileform.valid"
-      >Continue 
+      
+      >
+      <!-- [disabled]="!userprofileform.valid" -->
+      Continue 
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right icon">
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
@@ -466,7 +468,9 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
       </div>       
   <!-- Tab Component Start Ends -->
   
-  <div id="paystackEmbedContainer"></div>
+  <!-- <div class="html-embed-4 w-embed w-script"> -->
+    <div id="paystackEmbedContainer" class="paystack-embed-body"></div>
+   <!-- </div> -->
 
 <div class="embed-action-bar _1">
   <a (click)="toggleInformation()" class="embed-button subtle w-button">

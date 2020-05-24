@@ -5,6 +5,7 @@ import { BuyATicketComponent } from './buy-local/buy-a-ticket/buy-a-ticket.compo
 import { BuyTicketsComponent } from './buy-international/buy-tickets/buy-tickets.component';
 import { FrameComponent } from './frame/frame.component';
 import { PaymentComponent } from './buy-local/payment/payment.component';
+import { HomeComponent } from './home/home.component';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'buy-a-local-ticket/:id', component: BuyATicketComponent},
   {path: 'frame', component: FrameComponent},
   {path: 'payment', component: PaymentComponent},
-  { path: '', redirectTo: '/event-landing/:id', pathMatch: 'full' },
+  {path: 'home/:id', component: HomeComponent},
+  { path: '', redirectTo: '/home/:id', pathMatch: 'full' },
 ];
 
 @NgModule({
