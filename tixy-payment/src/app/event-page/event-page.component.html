@@ -18,10 +18,15 @@ data-wf-status="1" class=" w-mod-js">
   <ng-container *ngIf="showEvent">
     <div *ngFor="let eventDetail of eventDetails">
  <div class="header-section">
-   <div data-poster-url="https://uploads-ssl.webflow.com/5e3ed0eb641ae2c4b8765de8/5e55243771987fddd6103fcd_y2matecom - Palmwine Music Festival_NKL07vKAFvc_720p (1)-poster-00001.jpg" data-video-urls="https://uploads-ssl.webflow.com/5e3ed0eb641ae2c4b8765de8/5e55243771987fddd6103fcd_y2matecom - Palmwine Music Festival_NKL07vKAFvc_720p (1)-transcode.mp4,https://uploads-ssl.webflow.com/5e3ed0eb641ae2c4b8765de8/5e55243771987fddd6103fcd_y2matecom - Palmwine Music Festival_NKL07vKAFvc_720p (1)-transcode.webm" data-autoplay="true" data-loop="true" data-wf-ignore="true" class="background-height w-background-video-height w-background-video-atom">
+   <div 
+      data-poster-url="https://uploads-ssl.webflow.com/5e3ed0eb641ae2c4b8765de8/5e55243771987fddd6103fcd_y2matecom - Palmwine Music Festival_NKL07vKAFvc_720p (1)-poster-00001.jpg" 
+      data-video-urls="https://uploads-ssl.webflow.com/5e3ed0eb641ae2c4b8765de8/5e55243771987fddd6103fcd_y2matecom - Palmwine Music Festival_NKL07vKAFvc_720p (1)-transcode.mp4,https://uploads-ssl.webflow.com/5e3ed0eb641ae2c4b8765de8/5e55243771987fddd6103fcd_y2matecom - Palmwine Music Festival_NKL07vKAFvc_720p (1)-transcode.webm" 
+      data-autoplay="true" 
+      data-loop="true" 
+      data-wf-ignore="true" 
+      class="background-height w-background-video-height w-background-video-atom">
     <div id="responsive-image">
   <video 
-  width="1499"
   height="1000"
   autoplay="" 
   loop="" 
@@ -63,14 +68,16 @@ data-wf-status="1" class=" w-mod-js">
       <div>
         <div class="text-block">{{eventDetail.address}}, {{eventDetail.city}}, {{eventDetail.venue}}, Nigeria.</div>
       </div>
-      <div class="div-block-3"> -->
+      <!-- <div class="div-block-3"> -->
         <!-- <button type="button" (click)="sendUrl()" class="button-2 w-button">BUY&nbsp;TICKET</button> -->
-        <a 
-        [routerLink]="['/buy-a-local-ticket', eventId]" 
+        <!-- <a 
+       
         class="button-2 w-button"
         style="margin-right: 20%; margin-top: 20%; margin-bottom: 20%; margin-left: 45%;"
         >BUY&nbsp;TICKETS</a>
-      </div>
+      </div> -->
+      <div class="div-block-3">
+        <a href="#" class="button-2 w-button">BUY&nbsp;TICKETS</a></div>
     </div>
   </div>
 </div>
@@ -90,7 +97,9 @@ data-wf-status="1" class=" w-mod-js">
           </nav>
         </div>
         <div class="div-block">
-          <a href="#" class="button-2 w-button">BUY&nbsp;TICKETS</a>
+          <a 
+              [routerLink]="['/buy-a-local-ticket', eventId]"  
+              class="button-2 w-button">BUY&nbsp;TICKETS</a>
         </div>
         <div class="w-nav-overlay" data-wf-ignore=""></div>
       </div>
@@ -238,13 +247,4 @@ data-wf-status="1" class=" w-mod-js">
           >Alternative text</iframe>
         </ng-container>
  -->
-
-
-
-        
-
-
-
-
-
 </html>
