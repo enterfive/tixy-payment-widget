@@ -327,7 +327,7 @@ class="w-mod-js wf-nunito-n4-inactive wf-nunito-i4-inactive wf-nunito-n6-inactiv
          <!-- Dynamic Ticket Category Starts -->
          <div formArrayName="attendees">
          <ng-container
-         *ngFor="let ticket of ticketDetails; let i = index"
+         *ngFor="let ticket of allItemList; let i = index"
          [formGroupName]="i"
          >
          <div  

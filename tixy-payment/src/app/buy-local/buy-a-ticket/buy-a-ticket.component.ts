@@ -50,6 +50,8 @@ export class BuyATicketComponent implements OnInit {
   obj;
   controlArray;
   purchaseCallback;
+  allItemList: any[] = [];
+
  
   ngOnInit() {  
     this.activatedRoute.params.subscribe(params => {
@@ -57,7 +59,6 @@ export class BuyATicketComponent implements OnInit {
      console.log(this.eventId);
    });
    this.getOpenEventTicket();
-   this.classAdd()
 }
 
 
@@ -89,8 +90,8 @@ export class BuyATicketComponent implements OnInit {
   
    attendeesControl() {
     this.controlArray = this.userprofileform.get('attendees') as FormArray;
-    console.log(this.ticketDetails)
-    Object.keys(this.ticketDetails).forEach((i) => {
+    console.log(this.allItemList)
+    Object.keys(this.allItemList).forEach((i) => {
      this.controlArray.push(
        this.fb.group({
         first_name: new FormControl({ value: '', disabled: false }, Validators.required),
@@ -101,7 +102,7 @@ export class BuyATicketComponent implements OnInit {
           Validators.email,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
         ])),
-        ticket_category_id: this.ticketDetails[i].ticket_category_id
+        ticket_category_id: this.allItemList[i].ticket_category_id
         
       })
      )
@@ -238,7 +239,6 @@ console.log( (<any>window).PaystackPop)
     this.paymentService.getOpenTicketCategory(eventId).subscribe( (res:any) => {
       this.ticketDetails = res;
       this.total = res.map(x => x.price)
-      this.attendeesControl()
     })
   }
 
@@ -258,6 +258,8 @@ console.log( (<any>window).PaystackPop)
       }
 
   activateClassAdd(ticketDetail?,index?){
+    this.allItemList = this.allItemList.concat(ticketDetail);
+    console.log(this.allItemList)
     ticketDetail.active = false;
     ticketDetail.active = !ticketDetail.active;
     this.selectedTic = this.ticketDetails[index]
@@ -270,10 +272,17 @@ console.log( (<any>window).PaystackPop)
     } else {
       this.selectedTic.counter = 1 
     } 
+    this.attendeesControl()
+
   }
   
 
   activateClassMinus(ticketDetail?,index?){
+    const fTicketIndex = this.allItemList.findIndex(item => item.ticket_category_id==ticketDetail.ticket_category_id);
+    if(fTicketIndex >=0) {
+      this.allItemList.splice(fTicketIndex, 1);
+    }
+    console.log(this.allItemList)
     ticketDetail.active = false;   
     ticketDetail.active = !ticketDetail.active;
     const selectedTic = this.ticketDetails[index]  
@@ -285,24 +294,19 @@ console.log( (<any>window).PaystackPop)
     } else {
      //  selectedTic.counter = 0
     }
+    this.attendeesControl()
+
  }
 
- classAdd(){
-   console.log(this.selectedTic)
- }
 
  get getTotal() {
   //For Total Fees
   const ticketNumbers = this.ticketDetails.map(tic => (tic.counter || 0)); 
   const sumOfTicketNumbers = ticketNumbers.reduce((prev , curr) => prev + curr)
   this.allTicketNumbers = sumOfTicketNumbers
-
-
   let selectedTickArray = [];
   selectedTickArray.push(this.selectedTic)
- 
-  console.log(selectedTickArray)
-  //For Total Amount
+   //For Total Amount
   const totalAmounts = this.ticketDetails.map(tic => ((tic.price * (tic.counter || 0)))); 
   const totalSum = totalAmounts.reduce((prev , curr) => prev + curr)
   const all =  this.ticketDetails;
