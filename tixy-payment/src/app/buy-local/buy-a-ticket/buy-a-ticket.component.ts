@@ -106,8 +106,9 @@ export class BuyATicketComponent implements OnInit {
         
       })
      )
+     console.log(this.controlArray)
    })
-   console.log(this.controlArray.controls)
+  
  }  
 
  get f() {
@@ -123,12 +124,13 @@ validateArray(i){
 }
   
   checkValueAllTickets(e) {
-    const controlArray = this.userprofileform.controls.attendees as FormArray;
+    var controlArray = this.userprofileform.controls.attendees as FormArray;
     if (e.target.checked) {
       const firstname = this.userprofileform.get("buyer.first_name").value;
       const lastname =  this.userprofileform.get("buyer.last_name").value;
       const email =  this.userprofileform.get("buyer.email").value;
-      console.log(controlArray,firstname, lastname, email )
+      console.log(firstname, lastname, email )
+      Array.from({length: 100},(_,x) => console.log(x))
 
       controlArray.controls[0].get('first_name').setValue(firstname)
       controlArray.controls[0].get('last_name').setValue(lastname)
@@ -136,18 +138,22 @@ validateArray(i){
       controlArray.controls[1].get('first_name').setValue(firstname)
       controlArray.controls[1].get('last_name').setValue(lastname)
       controlArray.controls[1].get('email').setValue(email)
-    }
+      controlArray.controls[2].get('first_name').setValue(firstname)
+      controlArray.controls[2].get('last_name').setValue(lastname)
+      controlArray.controls[2].get('email').setValue(email)
+      controlArray.controls[3].get('first_name').setValue(firstname)
+      controlArray.controls[3].get('last_name').setValue(lastname)
+      controlArray.controls[3].get('email').setValue(email)
+      Array.from({length: 10},(_,x) => controlArray.controls[x].get('first_name').setValue(firstname))
+      Array.from({length: 10},(_,x) => controlArray.controls[x].get('last_name').setValue(lastname))
+      Array.from({length: 10},(_,x) => controlArray.controls[x].get('email').setValue(email))
+      }
     else {
-      controlArray.controls[0].get('first_name').setValue('')
-      controlArray.controls[0].get('last_name').setValue('')
-      controlArray.controls[0].get('email').setValue('')
-      controlArray.controls[1].get('first_name').setValue('')
-      controlArray.controls[1].get('last_name').setValue('')
-      controlArray.controls[1].get('email').setValue('')
-
-
+      Array.from({length: 100},(_,x) => controlArray.controls[0].get('first_name').setValue(''))
+      Array.from({length: 100},(_,x) => controlArray.controls[0].get('last_name').setValue(''))
+      Array.from({length: 100},(_,x) => controlArray.controls[0].get('email').setValue(''))
     }
-
+    // this.attendeesControl()
   }
   checkValueOfOneTicket(e, i: number) {
     const controlArray = this.userprofileform.controls.attendees as FormArray;
@@ -165,7 +171,6 @@ validateArray(i){
       controlArray.controls[i].get('last_name').setValue('')
       controlArray.controls[i].get('email').setValue('')
     }
-
   }
   
 //  Initializes Paystack Modal
@@ -211,19 +216,19 @@ console.log( (<any>window).PaystackPop)
 
   submitInformationForm(){
  //Expected Form Object
-//     const event_id = this.eventId;
-//     const amount = this.getTotal;
-//     const numberOfTicket  = this.allTicketNumbers;
-//     const buyer_obj = this.f.buyer.value
-//     const attendees = this.f.attendees.value
-//     console.log('eventd',event_id, 'buyer_obj', buyer_obj, 'attendees', attendees)
-//     this.paymentService.buyTicket(event_id,amount,numberOfTicket,buyer_obj, attendees).subscribe( (data:any) => {
-//     console.log("data", data.orderRef, "buyer_obj", buyer_obj, "data", data )
-//     let orderRef = data.orderRef
-//     //Toggle For Modal Tab
-//     localStorage.setItem('order_id', orderRef)
+    const event_id = this.eventId;
+    const amount = this.getTotal;
+    const numberOfTicket  = this.allTicketNumbers;
+    const buyer_obj = this.f.buyer.value
+    const attendees = this.f.attendees.value
+    console.log('eventd',event_id, 'buyer_obj', buyer_obj, 'attendees', attendees)
+    this.paymentService.buyTicket(event_id,amount,numberOfTicket,buyer_obj, attendees).subscribe( (data:any) => {
+    console.log("data", data.orderRef, "buyer_obj", buyer_obj, "data", data )
+    let orderRef = data.orderRef
+    //Toggle For Modal Tab
+    localStorage.setItem('order_id', orderRef)
    
-//  })
+ })
   }
 
 
@@ -273,7 +278,6 @@ console.log( (<any>window).PaystackPop)
       this.selectedTic.counter = 1 
     } 
     this.attendeesControl()
-
   }
   
 
@@ -295,7 +299,6 @@ console.log( (<any>window).PaystackPop)
      //  selectedTic.counter = 0
     }
     this.attendeesControl()
-
  }
 
 
