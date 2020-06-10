@@ -144,9 +144,9 @@ validateArray(i){
       controlArray.controls[3].get('first_name').setValue(firstname)
       controlArray.controls[3].get('last_name').setValue(lastname)
       controlArray.controls[3].get('email').setValue(email)
-      Array.from({length: 10},(_,x) => controlArray.controls[x].get('first_name').setValue(firstname))
-      Array.from({length: 10},(_,x) => controlArray.controls[x].get('last_name').setValue(lastname))
-      Array.from({length: 10},(_,x) => controlArray.controls[x].get('email').setValue(email))
+      Array.from({length: 100},(_,x) => controlArray.controls[x].get('first_name').setValue(firstname))
+      Array.from({length: 100},(_,x) => controlArray.controls[x].get('last_name').setValue(lastname))
+      Array.from({length: 100},(_,x) => controlArray.controls[x].get('email').setValue(email))
       }
     else {
       Array.from({length: 100},(_,x) => controlArray.controls[0].get('first_name').setValue(''))

@@ -127,33 +127,38 @@ validateArray(i){
   return controlArray
 }
   
-  checkValueAllTickets(e) {
-    const controlArray = this.userprofileform.controls.attendees as FormArray;
-    if (e.target.checked) {
-      const firstname = this.userprofileform.get("buyer.first_name").value;
-      const lastname =  this.userprofileform.get("buyer.last_name").value;
-      const email =  this.userprofileform.get("buyer.email").value;
-      console.log(controlArray,firstname, lastname, email )
+checkValueAllTickets(e) {
+  var controlArray = this.userprofileform.controls.attendees as FormArray;
+  if (e.target.checked) {
+    const firstname = this.userprofileform.get("buyer.first_name").value;
+    const lastname =  this.userprofileform.get("buyer.last_name").value;
+    const email =  this.userprofileform.get("buyer.email").value;
+    console.log(firstname, lastname, email )
+    Array.from({length: 100},(_,x) => console.log(x))
 
-      controlArray.controls[0].get('first_name').setValue(firstname)
-      controlArray.controls[0].get('last_name').setValue(lastname)
-      controlArray.controls[0].get('email').setValue(email)
-      controlArray.controls[1].get('first_name').setValue(firstname)
-      controlArray.controls[1].get('last_name').setValue(lastname)
-      controlArray.controls[1].get('email').setValue(email)
+    controlArray.controls[0].get('first_name').setValue(firstname)
+    controlArray.controls[0].get('last_name').setValue(lastname)
+    controlArray.controls[0].get('email').setValue(email)
+    controlArray.controls[1].get('first_name').setValue(firstname)
+    controlArray.controls[1].get('last_name').setValue(lastname)
+    controlArray.controls[1].get('email').setValue(email)
+    controlArray.controls[2].get('first_name').setValue(firstname)
+    controlArray.controls[2].get('last_name').setValue(lastname)
+    controlArray.controls[2].get('email').setValue(email)
+    controlArray.controls[3].get('first_name').setValue(firstname)
+    controlArray.controls[3].get('last_name').setValue(lastname)
+    controlArray.controls[3].get('email').setValue(email)
+    Array.from({length: 100},(_,x) => controlArray.controls[x].get('first_name').setValue(firstname))
+    Array.from({length: 100},(_,x) => controlArray.controls[x].get('last_name').setValue(lastname))
+    Array.from({length: 100},(_,x) => controlArray.controls[x].get('email').setValue(email))
     }
-    else {
-      controlArray.controls[0].get('first_name').setValue('')
-      controlArray.controls[0].get('last_name').setValue('')
-      controlArray.controls[0].get('email').setValue('')
-      controlArray.controls[1].get('first_name').setValue('')
-      controlArray.controls[1].get('last_name').setValue('')
-      controlArray.controls[1].get('email').setValue('')
-
-
-    }
-
+  else {
+    Array.from({length: 100},(_,x) => controlArray.controls[0].get('first_name').setValue(''))
+    Array.from({length: 100},(_,x) => controlArray.controls[0].get('last_name').setValue(''))
+    Array.from({length: 100},(_,x) => controlArray.controls[0].get('email').setValue(''))
   }
+  // this.attendeesControl()
+}
   checkValueOfOneTicket(e, i: number) {
     const controlArray = this.userprofileform.controls.attendees as FormArray;
     if (e.target.checked) {
