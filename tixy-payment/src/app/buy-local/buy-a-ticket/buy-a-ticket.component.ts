@@ -8,7 +8,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-import { DomSanitizer, SafeResourceUrl, SafeUrl  } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl  } from '@angular/platform-browser';
 import { ToastrManager } from 'ng6-toastr-notifications';
 @Component({
   selector: 'app-buy-a-ticket',
@@ -58,7 +58,11 @@ export class BuyATicketComponent implements OnInit {
       this.eventId = params['id'];
      console.log(this.eventId);
    });
-   this.getOpenEventTicket();
+   this.getOpenEventTicket();   
+}
+
+getI(i){
+  console.log(i)
 }
 
 
@@ -82,16 +86,16 @@ export class BuyATicketComponent implements OnInit {
         ])],
          fees: ['100']
          }),
-         attendees: this.fb.array([           
+         attendees: this.fb.array([  
          ])
        })    
    }
   
   
-   attendeesControl() {
+   attendeesControl(i?: number) {
     this.controlArray = this.userprofileform.get('attendees') as FormArray;
     console.log(this.allItemList)
-    Object.keys(this.allItemList).forEach((i) => {
+    // Object.keys(this.allItemList).forEach((i) => {
      this.controlArray.push(
        this.fb.group({
         first_name: new FormControl({ value: '', disabled: false }, Validators.required),
@@ -106,22 +110,22 @@ export class BuyATicketComponent implements OnInit {
         
       })
      )
-     console.log(this.controlArray)
-   })
+     console.log(this.controlArray.controls)
+  //  })
   
  }  
 
  get f() {
   const ff =  this.userprofileform.controls;
-  console.log(ff)
+  // console.log(ff)
   return ff
 }
 
-validateArray(i){
-  const controlArray = this.userprofileform.get('attendees') as FormArray;
-  console.log(controlArray.controls[i].invalid && controlArray.controls[1].touched)
-  return controlArray
-}
+// validateArray(i){
+//   const controlArray = this.userprofileform.get('attendees') as FormArray;
+//   console.log(controlArray.controls[i].invalid && controlArray.controls[1].touched)
+//   return controlArray
+// }
   
   checkValueAllTickets(e) {
     var controlArray = this.userprofileform.controls.attendees as FormArray;
@@ -130,31 +134,26 @@ validateArray(i){
       const lastname =  this.userprofileform.get("buyer.last_name").value;
       const email =  this.userprofileform.get("buyer.email").value;
       console.log(firstname, lastname, email )
-      Array.from({length: 100},(_,x) => console.log(x))
-
-      controlArray.controls[0].get('first_name').setValue(firstname)
-      controlArray.controls[0].get('last_name').setValue(lastname)
-      controlArray.controls[0].get('email').setValue(email)
-      controlArray.controls[1].get('first_name').setValue(firstname)
-      controlArray.controls[1].get('last_name').setValue(lastname)
-      controlArray.controls[1].get('email').setValue(email)
-      controlArray.controls[2].get('first_name').setValue(firstname)
-      controlArray.controls[2].get('last_name').setValue(lastname)
-      controlArray.controls[2].get('email').setValue(email)
-      controlArray.controls[3].get('first_name').setValue(firstname)
-      controlArray.controls[3].get('last_name').setValue(lastname)
-      controlArray.controls[3].get('email').setValue(email)
-      Array.from({length: 100},(_,x) => controlArray.controls[x].get('first_name').setValue(firstname))
-      Array.from({length: 100},(_,x) => controlArray.controls[x].get('last_name').setValue(lastname))
-      Array.from({length: 100},(_,x) => controlArray.controls[x].get('email').setValue(email))
+      var itemList = this.allItemList.length
+      console.log(itemList)
+      Array.from({length: itemList},(_,x) => console.log(x))
+      // controlArray.controls[0].get('first_name').setValue(firstname)
+      // controlArray.controls[0].get('last_name').setValue(lastname)
+      // controlArray.controls[0].get('email').setValue(email)      
+      Array.from({length: itemList},(_,x) => controlArray.controls[x].get('first_name').setValue(firstname))
+      Array.from({length: itemList},(_,x) => controlArray.controls[x].get('last_name').setValue(lastname))
+      Array.from({length: itemList},(_,x) => controlArray.controls[x].get('email').setValue(email))
       }
-    else {
-      Array.from({length: 100},(_,x) => controlArray.controls[0].get('first_name').setValue(''))
-      Array.from({length: 100},(_,x) => controlArray.controls[0].get('last_name').setValue(''))
-      Array.from({length: 100},(_,x) => controlArray.controls[0].get('email').setValue(''))
-    }
-    // this.attendeesControl()
-  }
+  else {
+    var itemList = this.allItemList.length
+    Array.from({length: itemList},(_,x) => controlArray.controls[x].get('first_name').setValue(''))
+    Array.from({length: itemList},(_,x) => controlArray.controls[x].get('last_name').setValue(''))
+    Array.from({length: itemList},(_,x) => controlArray.controls[x].get('email').setValue(''))
+ }
+  
+}
+
+
   checkValueOfOneTicket(e, i: number) {
     const controlArray = this.userprofileform.controls.attendees as FormArray;
     if (e.target.checked) {
@@ -221,7 +220,7 @@ console.log( (<any>window).PaystackPop)
     const numberOfTicket  = this.allTicketNumbers;
     const buyer_obj = this.f.buyer.value
     const attendees = this.f.attendees.value
-    console.log('eventd',event_id, 'buyer_obj', buyer_obj, 'attendees', attendees)
+    console.log('eventd',event_id, 'buyer_obj', buyer_obj, 'attendees', attendees)    
     this.paymentService.buyTicket(event_id,amount,numberOfTicket,buyer_obj, attendees).subscribe( (data:any) => {
     console.log("data", data.orderRef, "buyer_obj", buyer_obj, "data", data )
     let orderRef = data.orderRef
@@ -268,6 +267,7 @@ console.log( (<any>window).PaystackPop)
     ticketDetail.active = false;
     ticketDetail.active = !ticketDetail.active;
     this.selectedTic = this.ticketDetails[index]
+    this.attendeesControl(index)
     if(this.selectedTic.counter) { 
      this.selectedTic.counter++;
      const newPrice = this.selectedTic.price * this.selectedTic.counter;
@@ -277,12 +277,13 @@ console.log( (<any>window).PaystackPop)
     } else {
       this.selectedTic.counter = 1 
     } 
-    this.attendeesControl()
+    
   }
   
 
   activateClassMinus(ticketDetail?,index?){
     const fTicketIndex = this.allItemList.findIndex(item => item.ticket_category_id==ticketDetail.ticket_category_id);
+    this.attendeesControl(index)
     if(fTicketIndex >=0) {
       this.allItemList.splice(fTicketIndex, 1);
     }
@@ -298,7 +299,6 @@ console.log( (<any>window).PaystackPop)
     } else {
      //  selectedTic.counter = 0
     }
-    this.attendeesControl()
  }
 
 
@@ -315,6 +315,7 @@ console.log( (<any>window).PaystackPop)
   const all =  this.ticketDetails;
   // console.log(all)
   this.alltotal = totalSum
+  // this.attendeesControl()
   return totalSum;
 }
 }
